@@ -5,11 +5,11 @@ const prisma = new PrismaClient();
 
 const main = async (): Promise<void> => {
   const salt = await bcrypt.genSalt();
-  const password = await bcrypt.hash('blackbook@1', salt);
+  const password = await bcrypt.hash('dalutech@1', salt);
   const [admin, staff] = await Promise.all([
     prisma.user.create({
       data: {
-        email: `admin@blackbook`,
+        email: `admin@dalutech`,
         firstName: 'Admin',
         lastName: 'User',
         role: 'ADMIN',
@@ -21,7 +21,7 @@ const main = async (): Promise<void> => {
     }),
     prisma.user.create({
       data: {
-        email: 'staff@blackbook',
+        email: 'staff@dalutech',
         firstName: 'Staff',
         lastName: 'User',
         role: 'STAFF',

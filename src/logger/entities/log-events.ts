@@ -2,6 +2,7 @@ export enum LogEventType {
   REQUEST = 'Request',
   AUTHENTICATION = 'Authentication',
   AUTHORIZATION = 'Authorization',
+  USER = 'USER',
 }
 
 export enum LogEventReason {
@@ -9,6 +10,8 @@ export enum LogEventReason {
   AUTHENTICATION_LOGIN_FAILED = 'Login failed',
   AUTHENTICATION_LOGOUT_SUCCESSFUL = 'Logout successful',
   AUTHENTICATION_LOGOUT_FAILED = 'Logout failed',
+  USER_CREATED = 'User created',
+  USER_UPDATED = 'User updated',
 }
 
 export interface LogEventFingerprint {

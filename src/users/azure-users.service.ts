@@ -1,15 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'nestjs-prisma';
-import { PasswordService } from '../auth/password.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserEntity } from './entities/user.entity';
+import { LogEventReason, LogEventType } from 'src/logger/entities/log-events';
+import { CustomLogger } from '../logger/logger.service';
+import * as _ from 'lodash';
 
 @Injectable()
 export class AzureUsersService {
   constructor(
     private readonly prismaService: PrismaService,
-    private readonly passwordService: PasswordService,
+    private readonly logger: CustomLogger,
   ) {}
 
   public async findAll(): Promise<UserEntity[]> {
@@ -42,36 +44,33 @@ export class AzureUsersService {
 
   public async create(data: CreateUserDto): Promise<UserEntity> {
     const { password, ...user } = data;
-    if (!password) {
-      return this.prismaService.user.create({
-        data: {
-          ...user,
-        },
-      });
-    }
+    this.logger.log({
+      context: `${AzureUsersService.name} ${this.create.name}`,
+      event_type: LogEventType.USER,
+      reason: LogEventReason.USER_CREATED,
+      metadata: { ..._.pick(data, ['id', 'role']) },
+    });
 
-    const hashedPassword = await this.passwordService.hashPassword(password);
     return this.prismaService.user.create({
       data: {
         ...user,
-        password: { create: { password: hashedPassword } },
       },
     });
   }
 
   public async update(id: string, data: UpdateUserDto): Promise<UserEntity> {
     const { password, ...user } = data;
-    let passwordHash: string;
-
-    if (password) {
-      passwordHash = await this.passwordService.hashPassword(password);
-    }
+    this.logger.log({
+      context: `${AzureUsersService.name} ${this.update.name}`,
+      event_type: LogEventType.USER,
+      reason: LogEventReason.USER_UPDATED,
+      metadata: { ..._.pick(data, ['id', 'role']) },
+    });
 
     return this.prismaService.user.update({
       where: { id },
       data: {
         ...user,
-        password: passwordHash ? { update: { password: passwordHash } } : {},
       },
     });
   }

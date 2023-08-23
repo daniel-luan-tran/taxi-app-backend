@@ -13,6 +13,7 @@ datasource db {
 enum UserRole {
   STAFF
   ADMIN
+  USER
 }
 
 model Session {
@@ -42,14 +43,14 @@ model User {
   lastName      String?   @map("last_name")
   password      Password?
   active        Boolean
-  role          UserRole  @default(STAFF)
+  role          UserRole
   createdAt     DateTime  @default(now()) @map("created_at")
   createdUserId String?   @map("created_user_id") @db.Uuid
   updatedAt     DateTime  @default(now()) @updatedAt @map("updated_at")
   updatedUserId String?   @map("updated_user_id") @db.Uuid
-  azureOid      String?
-  phoneNumber   String?
-  displayName   String?
+  azureOid      String?   @map("azure_oid")
+  phoneNumber   String?   @map("phone_number")
+  displayName   String?   @map("display_name")
 
   @@map("users")
 }
