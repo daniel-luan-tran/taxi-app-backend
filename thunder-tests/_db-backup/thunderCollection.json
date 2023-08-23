@@ -1,0 +1,29 @@
+[
+  {
+    "_id": "75c31b16-31ab-4af9-9ead-2caf95a2bc89",
+    "colName": "API",
+    "created": "2023-04-27T06:37:15.521Z",
+    "sortNum": 10000,
+    "folders": [
+      {
+        "_id": "a954e9e3-acae-482d-847a-38449e08bab4",
+        "name": "auth",
+        "containerId": "",
+        "created": "2023-05-03T23:55:40.144Z",
+        "sortNum": 10000
+      },
+      {
+        "_id": "f162f621-0ac4-43ca-bdba-5b424e65b282",
+        "name": "users",
+        "containerId": "",
+        "created": "2023-05-04T00:03:55.519Z",
+        "sortNum": 20000
+      }
+    ],
+    "settings": {
+      "options": {
+        "baseUrl": "http://localhost:3000/api"
+      }
+    }
+  }
+]

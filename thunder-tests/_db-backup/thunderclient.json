@@ -1,0 +1,141 @@
+[
+  {
+    "_id": "88da5194-c378-4d2f-b1fc-60ab8a426091",
+    "colId": "75c31b16-31ab-4af9-9ead-2caf95a2bc89",
+    "containerId": "",
+    "name": "HealthCheck",
+    "url": "/",
+    "method": "GET",
+    "sortNum": 20000,
+    "created": "2023-04-27T06:38:13.727Z",
+    "modified": "2023-04-27T06:41:22.708Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "fb4c93f7-c1ca-4138-ad31-4d377edbee19",
+    "colId": "75c31b16-31ab-4af9-9ead-2caf95a2bc89",
+    "containerId": "a954e9e3-acae-482d-847a-38449e08bab4",
+    "name": "login",
+    "url": "/auth/login",
+    "method": "POST",
+    "sortNum": 30000,
+    "created": "2023-05-03T23:56:37.487Z",
+    "modified": "2023-05-12T07:20:16.244Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"email\": \"staff@blackbook\",\n  \"password\": \"blackbook@1\"\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "c83be386-929b-4e74-93a1-a9517701dac3",
+    "colId": "75c31b16-31ab-4af9-9ead-2caf95a2bc89",
+    "containerId": "a954e9e3-acae-482d-847a-38449e08bab4",
+    "name": "logout",
+    "url": "/auth/logout",
+    "method": "DELETE",
+    "sortNum": 40000,
+    "created": "2023-05-04T00:00:32.693Z",
+    "modified": "2023-05-04T00:01:11.687Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "59cf08f0-4521-4a95-980e-698c6faefd70",
+    "colId": "75c31b16-31ab-4af9-9ead-2caf95a2bc89",
+    "containerId": "a954e9e3-acae-482d-847a-38449e08bab4",
+    "name": "check",
+    "url": "/auth/check",
+    "method": "GET",
+    "sortNum": 50000,
+    "created": "2023-05-04T00:01:48.651Z",
+    "modified": "2023-05-04T00:01:59.312Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "88e30a38-7fa9-4fa7-a311-1fdf343266ea",
+    "colId": "75c31b16-31ab-4af9-9ead-2caf95a2bc89",
+    "containerId": "f162f621-0ac4-43ca-bdba-5b424e65b282",
+    "name": "findAll",
+    "url": "/users",
+    "method": "GET",
+    "sortNum": 60000,
+    "created": "2023-05-04T00:05:21.064Z",
+    "modified": "2023-05-04T00:06:07.836Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "adb835bd-be55-4a16-b68d-6c60514aacbd",
+    "colId": "75c31b16-31ab-4af9-9ead-2caf95a2bc89",
+    "containerId": "f162f621-0ac4-43ca-bdba-5b424e65b282",
+    "name": "findById",
+    "url": "/users/abe48d0b-7783-49ea-92d0-70c821910dda",
+    "method": "GET",
+    "sortNum": 70000,
+    "created": "2023-05-04T00:06:34.775Z",
+    "modified": "2023-06-06T05:33:51.883Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "2d3c9302-84f9-4a1c-9f39-efdea50ad544",
+    "colId": "75c31b16-31ab-4af9-9ead-2caf95a2bc89",
+    "containerId": "f162f621-0ac4-43ca-bdba-5b424e65b282",
+    "name": "create",
+    "url": "/users",
+    "method": "POST",
+    "sortNum": 80000,
+    "created": "2023-05-04T00:07:49.211Z",
+    "modified": "2023-05-04T00:10:20.246Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"email\": \"tyler.beutel@blackbook.au\",\n  \"firstName\": \"Tyler\",\n  \"lastName\": \"Beutel\",\n  \"password\": \"blackbook@1\",\n  \"active\": true\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "a6c51c23-97ed-421a-b768-3b86a606cb02",
+    "colId": "75c31b16-31ab-4af9-9ead-2caf95a2bc89",
+    "containerId": "f162f621-0ac4-43ca-bdba-5b424e65b282",
+    "name": "update",
+    "url": "/users/489e1e41-3de3-4e49-8179-70d32917b867",
+    "method": "PUT",
+    "sortNum": 90000,
+    "created": "2023-05-04T00:10:47.259Z",
+    "modified": "2023-05-04T00:16:36.268Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"role\": \"ADMIN\"\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "da61ccb2-5be3-42d4-b6d7-e5fa8db876b5",
+    "colId": "75c31b16-31ab-4af9-9ead-2caf95a2bc89",
+    "containerId": "f162f621-0ac4-43ca-bdba-5b424e65b282",
+    "name": "delete",
+    "url": "",
+    "method": "GET",
+    "sortNum": 100000,
+    "created": "2023-05-04T00:20:20.917Z",
+    "modified": "2023-05-04T00:20:20.918Z",
+    "headers": []
+  }
+]
