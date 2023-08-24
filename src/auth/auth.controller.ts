@@ -58,13 +58,13 @@ export class AuthController {
   public async azureADCallback(@CurrentUser() user) {
     // const redirectUrl = `${process.env.FRONTEND_URL}`;
     // return res.redirect(redirectUrl);
-    return { userProfile: user };
+    return { user };
   }
 
   @Get('/azureAD/check')
   @UseGuards(SessionAuthGuard)
   public async test(@CurrentUser() user) {
-    return { userProfile: user };
+    return { user };
   }
 
   @UseGuards(SessionAuthGuard)
