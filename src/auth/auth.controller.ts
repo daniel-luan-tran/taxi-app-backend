@@ -70,7 +70,7 @@ export class AuthController {
   @UseGuards(SessionAuthGuard)
   @Get('/azureAD/logout')
   public async logoutBearerAzure() {
-    const logoutLink = `https://login.microsoftonline.com/${process.env.TENANT_ID}/oauth2/logout?post_logout_redirect_uri=${process.env.FRONTEND_URL}`;
+    const logoutLink = `https://login.microsoftonline.com/${process.env.TENANT_ID}/oauth2/logout?post_logout_redirect_uri=${process.env.MOBILE_URL}`;
     await this.authService.logout();
     return logoutLink;
   }
