@@ -58,13 +58,13 @@ export class AuthController {
   public async azureADCallback(@CurrentUser() user) {
     // const redirectUrl = `${process.env.FRONTEND_URL}`;
     // return res.redirect(redirectUrl);
-    return { user };
+    return user;
   }
 
   @Get('/azureAD/check')
   @UseGuards(SessionAuthGuard)
   public async test(@CurrentUser() user) {
-    return { user };
+    return user;
   }
 
   @UseGuards(SessionAuthGuard)
@@ -72,6 +72,6 @@ export class AuthController {
   public async logoutBearerAzure() {
     const logoutLink = `https://login.microsoftonline.com/${process.env.TENANT_ID}/oauth2/logout?post_logout_redirect_uri=${process.env.FRONTEND_URL}`;
     await this.authService.logout();
-    return { logoutLink };
+    return logoutLink;
   }
 }
