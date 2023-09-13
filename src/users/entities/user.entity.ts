@@ -14,4 +14,5 @@ export class UserEntity implements User {
   azureOid: string | null;
   displayName: string | null;
   phoneNumber: string | null;
+  address: string | null;
 }

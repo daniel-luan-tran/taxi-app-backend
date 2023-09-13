@@ -24,7 +24,8 @@
     "migrate:reset": "npx prisma migrate reset",
     "migrate:deploy": "npx prisma migrate deploy",
     "prisma:generate": "npx prisma generate",
-    "prisma:seed": "npx prisma db seed"
+    "prisma:seed": "npx prisma db seed",
+    "prisma:format": "npx prisma format"
   },
   "dependencies": {
     "@nestjs/common": "^10.1.3",

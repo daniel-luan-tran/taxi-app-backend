@@ -51,6 +51,7 @@ model User {
   azureOid      String?   @map("azure_oid")
   phoneNumber   String?   @map("phone_number")
   displayName   String?   @map("display_name")
+  address String?
 
   @@map("users")
 }
