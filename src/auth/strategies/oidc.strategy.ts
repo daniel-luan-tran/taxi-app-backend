@@ -10,6 +10,7 @@ const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 const ID_METADATA = process.env.ID_METADATA;
 const URL_CALLBACK = process.env.URL_CALLBACK;
+const URL_CALLBACK_FOR_STAFFS = process.env.URL_CALLBACK_FOR_STAFFS;
 
 @Injectable()
 export class OIDCStrategyPassport extends PassportStrategy(
@@ -24,6 +25,28 @@ export class OIDCStrategyPassport extends PassportStrategy(
       responseType: 'code id_token',
       responseMode: 'form_post',
       redirectUrl: URL_CALLBACK,
+      allowHttpForRedirectUrl: true,
+      clientSecret: CLIENT_SECRET,
+      validateIssuer: true,
+      scope: ['openid', 'profile', 'email', 'user.read', 'offline_access'],
+    };
+    super(options);
+  }
+}
+
+@Injectable()
+export class OIDCStrategyPassportForStaffs extends PassportStrategy(
+  OIDCStrategy,
+  'azure-ad-for-staffs',
+) {
+  constructor() {
+    const options: IOIDCStrategyOptionWithRequest = {
+      passReqToCallback: true,
+      identityMetadata: ID_METADATA,
+      clientID: CLIENT_ID,
+      responseType: 'code id_token',
+      responseMode: 'form_post',
+      redirectUrl: URL_CALLBACK_FOR_STAFFS,
       allowHttpForRedirectUrl: true,
       clientSecret: CLIENT_SECRET,
       validateIssuer: true,

@@ -74,4 +74,19 @@ export class AzureUsersService {
       },
     });
   }
+
+  public async deleteUser(id: string): Promise<UserEntity> {
+    this.logger.log({
+      context: `${AzureUsersService.name} ${this.update.name}`,
+      event_type: LogEventType.USER,
+      reason: LogEventReason.USER_DELETED,
+    });
+
+    return this.prismaService.user.update({
+      where: { id },
+      data: {
+        active: false,
+      },
+    });
+  }
 }

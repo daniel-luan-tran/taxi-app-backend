@@ -9,12 +9,17 @@ import { SessionSerializer } from './session.serializer';
 import { LocalStrategy } from './strategies/local.strategy';
 import {
   AzureADAuthGuardLogin,
+  AzureADAuthGuardLoginForStaffs,
   AzureAdGuard,
+  AzureAdGuardForStaffs,
   BearerGuard,
 } from './guards/azure-ad.guard';
 import { AzureUsersService } from 'src/users/azure-users.service';
 import { BearerStrategyPassport } from './strategies/bearer.strategy';
-import { OIDCStrategyPassport } from './strategies/oidc.strategy';
+import {
+  OIDCStrategyPassport,
+  OIDCStrategyPassportForStaffs,
+} from './strategies/oidc.strategy';
 
 @Module({
   imports: [
@@ -29,8 +34,11 @@ import { OIDCStrategyPassport } from './strategies/oidc.strategy';
     LocalStrategy,
     SessionSerializer,
     OIDCStrategyPassport,
+    OIDCStrategyPassportForStaffs,
     AzureADAuthGuardLogin,
+    AzureADAuthGuardLoginForStaffs,
     AzureAdGuard,
+    AzureAdGuardForStaffs,
     BearerGuard,
     BearerStrategyPassport,
     AzureUsersService,

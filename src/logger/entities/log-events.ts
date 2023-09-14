@@ -12,6 +12,7 @@ export enum LogEventReason {
   AUTHENTICATION_LOGOUT_FAILED = 'Logout failed',
   USER_CREATED = 'User created',
   USER_UPDATED = 'User updated',
+  USER_DELETED = 'User deleted',
 }
 
 export interface LogEventFingerprint {

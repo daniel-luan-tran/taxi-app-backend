@@ -8,6 +8,7 @@ import {
   Post,
   Res,
   UseGuards,
+  Body,
 } from '@nestjs/common';
 import { ThrottlerGuard } from '@nestjs/throttler';
 import { UserEntity } from '../users/entities/user.entity';
@@ -16,12 +17,20 @@ import { AuthService } from './auth.service';
 import { Role } from './entities/role.enum';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { SessionAuthGuard } from './guards/session-auth.guard';
-import { AzureAdGuard, AzureADAuthGuardLogin } from './guards/azure-ad.guard';
-import { UserRole } from '@prisma/client';
+import {
+  AzureAdGuard,
+  AzureADAuthGuardLogin,
+  AzureAdGuardForStaffs,
+  AzureADAuthGuardLoginForStaffs,
+} from './guards/azure-ad.guard';
+import { AzureUsersService } from 'src/users/azure-users.service';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly azureUserService: AzureUsersService,
+  ) {}
 
   @Post('/login')
   @UseGuards(LocalAuthGuard, ThrottlerGuard)
@@ -55,13 +64,24 @@ export class AuthController {
     // The actual login will be handled by Azure AD
   }
 
+  @Get('/azureAD/login-for-staffs')
+  @UseGuards(AzureAdGuardForStaffs)
+  public async azureADLoginForStaffs() {
+    // This endpoint will trigger the Azure AD authentication flow
+    // The actual login will be handled by Azure AD
+  }
+
   @Post('/azureAD/callback')
   @UseGuards(AzureADAuthGuardLogin)
-  public async azureADCallback(
-    @CurrentUser() user,
-    @Param('role') role: UserRole,
-  ) {
-    console.log('Role', role);
+  public async azureADCallback(@CurrentUser() user) {
+    // const redirectUrl = `${process.env.FRONTEND_URL}`;
+    // return res.redirect(redirectUrl);
+    return user;
+  }
+
+  @Post('/azureAD/callbackforstaffs')
+  @UseGuards(AzureADAuthGuardLoginForStaffs)
+  public async azureADCallbackForStaffs(@CurrentUser() user) {
     // const redirectUrl = `${process.env.FRONTEND_URL}`;
     // return res.redirect(redirectUrl);
     return user;
@@ -71,6 +91,13 @@ export class AuthController {
   @UseGuards(SessionAuthGuard)
   public async test(@CurrentUser() user) {
     return user;
+  }
+
+  @Get('/azureAD/delete-user')
+  @UseGuards(SessionAuthGuard)
+  public async deleteUser(@CurrentUser() user) {
+    await this.azureUserService.deleteUser(user.id);
+    return { msg: 'User deleted' };
   }
 
   @UseGuards(SessionAuthGuard)

@@ -6,4 +6,5 @@ export const ErrorMessage = {
   EMAIL_PASSWORD_IS_INCORRECT: 'Email or password is incorrect.',
   INVALID_TOKEN: 'Invalid token.',
   DELETE_USER_FORBIDDEN: 'You do not have permission to delete other users.',
+  INVALID_ROLE: 'Invalid role.',
 };
