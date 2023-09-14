@@ -8,6 +8,7 @@ import { UsersModule } from './users/users.module';
 import { SocketModule } from './socket/socket.module';
 import { SocketIoAdapter } from './socket/socketio.adapter';
 import { SocketGateway } from './socket/socket.service';
+import { BookingHistoryModule } from './booking-history/booking-history.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { SocketGateway } from './socket/socket.service';
     UsersModule,
     LoggerModule,
     SocketModule,
+    BookingHistoryModule,
     // SocketGateway,
     // SocketIoAdapter,
   ],

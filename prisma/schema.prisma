@@ -14,7 +14,6 @@ enum UserRole {
   STAFF
   ADMIN
   USER
-  DRIVER
 }
 
 model Session {
@@ -33,35 +32,72 @@ model Password {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
   User      User     @relation(fields: [userId], references: [id])
+  Driver    Driver[]
 
   @@map("passwords")
 }
 
+model DriverPassword {
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String   @unique @map("user_id") @db.Uuid
+  password  String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+  User      Driver   @relation(fields: [userId], references: [id])
+
+  @@map("driver_passwords")
+}
+
 model User {
-  id            String    @id @default(uuid()) @db.Uuid
-  email         String    @unique
-  firstName     String?   @map("first_name")
-  lastName      String?   @map("last_name")
-  password      Password?
-  active        Boolean
-  role          UserRole
-  createdAt     DateTime  @default(now()) @map("created_at")
-  createdUserId String?   @map("created_user_id") @db.Uuid
-  updatedAt     DateTime  @default(now()) @updatedAt @map("updated_at")
-  updatedUserId String?   @map("updated_user_id") @db.Uuid
-  azureOid      String?   @map("azure_oid")
-  phoneNumber   String?   @map("phone_number")
-  displayName   String?   @map("display_name")
-  address       String?
+  id             String           @id @default(uuid()) @db.Uuid
+  email          String           @unique
+  firstName      String?          @map("first_name")
+  lastName       String?          @map("last_name")
+  password       Password?
+  active         Boolean
+  role           UserRole
+  createdAt      DateTime         @default(now()) @map("created_at")
+  createdUserId  String?          @map("created_user_id") @db.Uuid
+  updatedAt      DateTime         @default(now()) @updatedAt @map("updated_at")
+  updatedUserId  String?          @map("updated_user_id") @db.Uuid
+  azureOid       String?          @map("azure_oid")
+  phoneNumber    String?          @map("phone_number")
+  displayName    String?          @map("display_name")
+  address        String?
+  BookingHistory BookingHistory[]
 
   @@map("users")
 }
 
 model Driver {
-  id   String @id @default(uuid()) @db.Uuid
-  name String
+  id             String           @id @default(uuid()) @db.Uuid
+  email          String           @unique
+  firstName      String?          @map("first_name")
+  lastName       String?          @map("last_name")
+  password       Password?        @relation(fields: [passwordId], references: [id])
+  active         Boolean
+  createdAt      DateTime         @default(now()) @map("created_at")
+  createdUserId  String?          @map("created_user_id") @db.Uuid
+  updatedAt      DateTime         @default(now()) @updatedAt @map("updated_at")
+  updatedUserId  String?          @map("updated_user_id") @db.Uuid
+  azureOid       String?          @map("azure_oid")
+  phoneNumber    String?          @map("phone_number")
+  displayName    String?          @map("display_name")
+  address        String?
+  BookingHistory BookingHistory[]
+  DriverPassword DriverPassword?
+  passwordId     String?          @db.Uuid
+
+  @@map("drivers")
 }
 
 model BookingHistory {
-  id String @id @default(uuid()) @db.Uuid
+  id       String   @id @default(uuid()) @db.Uuid
+  userId   String
+  user     User     @relation(fields: [userId], references: [id])
+  driverId String
+  driver   Driver   @relation(fields: [driverId], references: [id])
+  bookAt   DateTime @default(now()) @map("book_at")
+  from     String
+  to       String
 }
