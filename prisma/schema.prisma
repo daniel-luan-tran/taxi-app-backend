@@ -14,6 +14,7 @@ enum UserRole {
   STAFF
   ADMIN
   USER
+  DRIVER
 }
 
 model Session {
@@ -51,7 +52,16 @@ model User {
   azureOid      String?   @map("azure_oid")
   phoneNumber   String?   @map("phone_number")
   displayName   String?   @map("display_name")
-  address String?
+  address       String?
 
   @@map("users")
+}
+
+model Driver {
+  id   String @id @default(uuid()) @db.Uuid
+  name String
+}
+
+model BookingHistory {
+  id String @id @default(uuid()) @db.Uuid
 }

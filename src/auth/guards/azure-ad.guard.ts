@@ -39,6 +39,7 @@ export class AzureADAuthGuardLogin extends AuthGuard('bearer') {
   }
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
+    const role = request.params.role;
     const token = request.body.id_token;
     const decodedToken = jwt.decode(token, {
       complete: true,
@@ -62,10 +63,12 @@ export class AzureADAuthGuardLogin extends AuthGuard('bearer') {
       firstName,
       lastName,
       displayName,
-      role: Role.USER,
     };
     if (!_user) {
-      _user = await this.azureUsersService.create(userProfile);
+      _user = await this.azureUsersService.create({
+        ...userProfile,
+        role: role || Role.USER,
+      });
     }
     if (!_user.active) {
       throw new UnauthorizedException(ErrorMessage.USER_NOT_ACTIVE);

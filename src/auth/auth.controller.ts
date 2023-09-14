@@ -4,6 +4,7 @@ import {
   Get,
   HttpCode,
   HttpStatus,
+  Param,
   Post,
   Res,
   UseGuards,
@@ -16,6 +17,7 @@ import { Role } from './entities/role.enum';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { SessionAuthGuard } from './guards/session-auth.guard';
 import { AzureAdGuard, AzureADAuthGuardLogin } from './guards/azure-ad.guard';
+import { UserRole } from '@prisma/client';
 
 @Controller('auth')
 export class AuthController {
@@ -55,7 +57,11 @@ export class AuthController {
 
   @Post('/azureAD/callback')
   @UseGuards(AzureADAuthGuardLogin)
-  public async azureADCallback(@CurrentUser() user) {
+  public async azureADCallback(
+    @CurrentUser() user,
+    @Param('role') role: UserRole,
+  ) {
+    console.log('Role', role);
     // const redirectUrl = `${process.env.FRONTEND_URL}`;
     // return res.redirect(redirectUrl);
     return user;
