@@ -20,6 +20,7 @@ import {
   OIDCStrategyPassport,
   OIDCStrategyPassportForStaffs,
 } from './strategies/oidc.strategy';
+import { AzureAccountsService } from 'src/users/azure-account.service';
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import {
     BearerGuard,
     BearerStrategyPassport,
     AzureUsersService,
+    AzureAccountsService,
   ],
   controllers: [AuthController],
   exports: [AuthService, PasswordService],

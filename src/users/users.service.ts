@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'nestjs-prisma';
 import { PasswordService } from '../auth/password.service';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { UserEntity } from './entities/user.entity';
+import { CreateAccountDto } from './dto/create-account.dto';
+import { UpdateAccountDto } from './dto/update-account.dto';
+import { AccountEntity } from './entities/account.entity';
 
 @Injectable()
 export class UsersService {
@@ -12,26 +12,26 @@ export class UsersService {
     private readonly passwordService: PasswordService,
   ) {}
 
-  public async findAll(): Promise<UserEntity[]> {
-    return this.prismaService.user.findMany();
+  public async findAll(): Promise<AccountEntity[]> {
+    return this.prismaService.account.findMany();
   }
 
-  public async findById(id: string): Promise<UserEntity> {
-    return this.prismaService.user.findFirst({
+  public async findById(id: string): Promise<AccountEntity> {
+    return this.prismaService.account.findFirst({
       where: { id },
     });
   }
 
-  public async findByEmail(email: string): Promise<UserEntity> {
-    return this.prismaService.user.findFirst({
+  public async findByEmail(email: string): Promise<AccountEntity> {
+    return this.prismaService.account.findFirst({
       where: { email },
     });
   }
 
-  public async create(data: CreateUserDto): Promise<UserEntity> {
+  public async create(data: CreateAccountDto): Promise<AccountEntity> {
     const { password, ...user } = data;
     const hashedPassword = await this.passwordService.hashPassword(password);
-    return this.prismaService.user.create({
+    return this.prismaService.account.create({
       data: {
         ...user,
         password: { create: { password: hashedPassword } },
@@ -39,7 +39,10 @@ export class UsersService {
     });
   }
 
-  public async update(id: string, data: UpdateUserDto): Promise<UserEntity> {
+  public async update(
+    id: string,
+    data: UpdateAccountDto,
+  ): Promise<AccountEntity> {
     const { password, ...user } = data;
     let passwordHash: string;
 
@@ -47,7 +50,7 @@ export class UsersService {
       passwordHash = await this.passwordService.hashPassword(password);
     }
 
-    return this.prismaService.user.update({
+    return this.prismaService.account.update({
       where: { id },
       data: {
         ...user,

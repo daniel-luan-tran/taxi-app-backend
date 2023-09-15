@@ -10,12 +10,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum UserRole {
-  STAFF
-  ADMIN
-  USER
-}
-
 model Session {
   id        String   @id
   sid       String   @unique
@@ -27,43 +21,41 @@ model Session {
 
 model Password {
   id        String   @id @default(uuid()) @db.Uuid
-  userId    String   @unique @map("user_id") @db.Uuid
+  accountId String   @unique @map("user_id") @db.Uuid
   password  String
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
-  User      User     @relation(fields: [userId], references: [id])
-  Driver    Driver[]
+  account   Account  @relation(fields: [accountId], references: [id])
 
   @@map("passwords")
 }
 
-model DriverPassword {
-  id        String   @id @default(uuid()) @db.Uuid
-  userId    String   @unique @map("user_id") @db.Uuid
-  password  String
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
-  User      Driver   @relation(fields: [userId], references: [id])
+model Account {
+  id            String    @id @default(uuid()) @db.Uuid
+  email         String    @unique
+  firstName     String?   @map("first_name")
+  lastName      String?   @map("last_name")
+  active        Boolean
+  createdAt     DateTime  @default(now()) @map("created_at")
+  createdUserId String?   @map("created_user_id") @db.Uuid
+  updatedAt     DateTime  @default(now()) @updatedAt @map("updated_at")
+  updatedUserId String?   @map("updated_user_id") @db.Uuid
+  azureOid      String?   @map("azure_oid")
+  phoneNumber   String?   @map("phone_number")
+  displayName   String?   @map("display_name")
+  address       String?
+  password      Password?
+  User          User?
+  Driver        Driver?
+  Staff         Staff?
 
-  @@map("driver_passwords")
+  @@map("accounts")
 }
 
 model User {
   id             String           @id @default(uuid()) @db.Uuid
-  email          String           @unique
-  firstName      String?          @map("first_name")
-  lastName       String?          @map("last_name")
-  password       Password?
-  active         Boolean
-  role           UserRole
-  createdAt      DateTime         @default(now()) @map("created_at")
-  createdUserId  String?          @map("created_user_id") @db.Uuid
-  updatedAt      DateTime         @default(now()) @updatedAt @map("updated_at")
-  updatedUserId  String?          @map("updated_user_id") @db.Uuid
-  azureOid       String?          @map("azure_oid")
-  phoneNumber    String?          @map("phone_number")
-  displayName    String?          @map("display_name")
-  address        String?
+  accountId      String           @db.Uuid @unique
+  account        Account          @relation(fields: [accountId], references: [id])
   BookingHistory BookingHistory[]
 
   @@map("users")
@@ -71,24 +63,19 @@ model User {
 
 model Driver {
   id             String           @id @default(uuid()) @db.Uuid
-  email          String           @unique
-  firstName      String?          @map("first_name")
-  lastName       String?          @map("last_name")
-  password       Password?        @relation(fields: [passwordId], references: [id])
-  active         Boolean
-  createdAt      DateTime         @default(now()) @map("created_at")
-  createdUserId  String?          @map("created_user_id") @db.Uuid
-  updatedAt      DateTime         @default(now()) @updatedAt @map("updated_at")
-  updatedUserId  String?          @map("updated_user_id") @db.Uuid
-  azureOid       String?          @map("azure_oid")
-  phoneNumber    String?          @map("phone_number")
-  displayName    String?          @map("display_name")
-  address        String?
+  accountId      String           @db.Uuid @unique
+  account        Account          @relation(fields: [accountId], references: [id])
   BookingHistory BookingHistory[]
-  DriverPassword DriverPassword?
-  passwordId     String?          @db.Uuid
 
   @@map("drivers")
+}
+
+model Staff {
+  id             String           @id @default(uuid()) @db.Uuid
+  accountId String   @db.Uuid @unique
+  account   Account @relation(fields: [accountId], references: [id])
+
+  @@map("staffs")
 }
 
 model BookingHistory {

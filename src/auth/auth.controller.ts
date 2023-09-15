@@ -22,8 +22,11 @@ import {
   AzureADAuthGuardLogin,
   AzureAdGuardForStaffs,
   AzureADAuthGuardLoginForStaffs,
+  AzureAdGuardForDrivers,
+  AzureADAuthGuardLoginForDrivers,
 } from './guards/azure-ad.guard';
 import { AzureUsersService } from 'src/users/azure-users.service';
+import { CurrentDriver } from 'src/users/drivers.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -71,6 +74,14 @@ export class AuthController {
     // The actual login will be handled by Azure AD
   }
 
+  @Get('/azureAD/login-for-driver')
+  @UseGuards(AzureAdGuardForDrivers)
+  public async azureADLoginForDrivers() {
+    // This endpoint will trigger the Azure AD authentication flow
+    // The actual login will be handled by Azure AD
+  }
+
+  // For passengers ~ users
   @Post('/azureAD/callback')
   @UseGuards(AzureADAuthGuardLogin)
   public async azureADCallback(@CurrentUser() user) {
@@ -85,6 +96,14 @@ export class AuthController {
     // const redirectUrl = `${process.env.FRONTEND_URL}`;
     // return res.redirect(redirectUrl);
     return user;
+  }
+
+  @Post('/azureAD/callbackfordrivers')
+  @UseGuards(AzureADAuthGuardLoginForDrivers)
+  public async azureADCallbackForDrivers(@CurrentDriver() driver) {
+    // const redirectUrl = `${process.env.FRONTEND_URL}`;
+    // return res.redirect(redirectUrl);
+    return driver;
   }
 
   @Get('/azureAD/check')

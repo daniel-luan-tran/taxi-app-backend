@@ -3,7 +3,7 @@ import { ContextIdFactory, ModuleRef } from '@nestjs/core';
 import { PassportStrategy } from '@nestjs/passport';
 import { isNil } from 'lodash';
 import { Strategy } from 'passport-local';
-import { UserEntity } from '../../users/entities/user.entity';
+import { AccountEntity } from '../../users/entities/account.entity';
 import { AuthService } from '../auth.service';
 
 @Injectable()
@@ -20,7 +20,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     request: Request,
     email: string,
     password: string,
-  ): Promise<UserEntity> {
+  ): Promise<AccountEntity> {
     const contextId = ContextIdFactory.getByRequest(request);
     const authService = await this.moduleRef.resolve(AuthService, contextId);
 

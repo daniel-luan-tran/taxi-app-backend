@@ -10,7 +10,7 @@ import { Request } from 'express';
 import { isNil } from 'lodash';
 import { LogEventReason, LogEventType } from '../logger/entities/log-events';
 import { CustomLogger } from '../logger/logger.service';
-import { UserEntity } from '../users/entities/user.entity';
+import { AccountEntity } from 'src/users/entities/account.entity';
 import { UsersService } from '../users/users.service';
 import { PasswordService } from './password.service';
 
@@ -26,7 +26,7 @@ export class AuthService {
   public async validateUser(
     email: string,
     password: string,
-  ): Promise<UserEntity | undefined> {
+  ): Promise<AccountEntity | undefined> {
     // 🎯 Minimum 8 characters
     // 🎯 Should contain 1 or more numbers
     // 🎯 Should contain 1 or more symbols
@@ -109,7 +109,7 @@ export class AuthService {
     });
   }
 
-  public async findById(id): Promise<UserEntity> {
+  public async findById(id): Promise<AccountEntity> {
     return await this.usersService.findById(id);
   }
 }
