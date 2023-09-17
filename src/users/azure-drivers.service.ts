@@ -34,6 +34,7 @@ export class AzureDriversService {
     const account = await this.azureAccountsService.findByAzureOid(azureOid);
     return this.prismaService.driver.findFirst({
       where: { accountId: account.id },
+      include: { account: true },
     });
   }
 
@@ -41,6 +42,7 @@ export class AzureDriversService {
     const account = await this.azureAccountsService.findByEmail(email);
     return this.prismaService.driver.findFirst({
       where: { accountId: account.id },
+      include: { account: true },
     });
   }
 
@@ -57,6 +59,7 @@ export class AzureDriversService {
       data: {
         ...user,
       },
+      include: { account: true },
     });
   }
 
@@ -77,12 +80,13 @@ export class AzureDriversService {
       data: {
         ...user,
       },
+      include: { account: true },
     });
   }
 
   public async deleteUser(id: string): Promise<DriverEntity> {
     this.logger.log({
-      context: `${AzureDriversService.name} ${this.update.name}`,
+      context: `${AzureDriversService.name} ${this.deleteUser.name}`,
       event_type: LogEventType.DRIVER,
       reason: LogEventReason.DRIVER_DELETED,
     });

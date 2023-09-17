@@ -12,7 +12,7 @@ import {
 } from '@nestjs/common';
 import { ThrottlerGuard } from '@nestjs/throttler';
 import { UserEntity } from '../users/entities/user.entity';
-import { CurrentUser } from '../users/users.decorator';
+import { CurrentAccount } from '../users/accounts.decorator';
 import { AuthService } from './auth.service';
 import { Role } from './entities/role.enum';
 import { LocalAuthGuard } from './guards/local-auth.guard';
@@ -38,7 +38,7 @@ export class AuthController {
   @Post('/login')
   @UseGuards(LocalAuthGuard, ThrottlerGuard)
   @HttpCode(HttpStatus.OK)
-  public login(@CurrentUser() user: UserEntity): UserEntity {
+  public login(@CurrentAccount() user: UserEntity): UserEntity {
     return user;
   }
 
@@ -50,7 +50,7 @@ export class AuthController {
 
   @Get('/check')
   @UseGuards(SessionAuthGuard)
-  public check(@CurrentUser() user): UserEntity {
+  public check(@CurrentAccount() user): UserEntity {
     return user;
   }
 
@@ -84,7 +84,7 @@ export class AuthController {
   // For passengers ~ users
   @Post('/azureAD/callback')
   @UseGuards(AzureADAuthGuardLogin)
-  public async azureADCallback(@CurrentUser() user) {
+  public async azureADCallback(@CurrentAccount() user) {
     // const redirectUrl = `${process.env.FRONTEND_URL}`;
     // return res.redirect(redirectUrl);
     return user;
@@ -92,7 +92,7 @@ export class AuthController {
 
   @Post('/azureAD/callbackforstaffs')
   @UseGuards(AzureADAuthGuardLoginForStaffs)
-  public async azureADCallbackForStaffs(@CurrentUser() user) {
+  public async azureADCallbackForStaffs(@CurrentAccount() user) {
     // const redirectUrl = `${process.env.FRONTEND_URL}`;
     // return res.redirect(redirectUrl);
     return user;
@@ -108,13 +108,13 @@ export class AuthController {
 
   @Get('/azureAD/check')
   @UseGuards(SessionAuthGuard)
-  public async test(@CurrentUser() user) {
+  public async test(@CurrentAccount() user) {
     return user;
   }
 
   @Get('/azureAD/delete-user')
   @UseGuards(SessionAuthGuard)
-  public async deleteUser(@CurrentUser() user) {
+  public async deleteUser(@CurrentAccount() user) {
     await this.azureUserService.deleteUser(user.id);
     return { msg: 'User deleted' };
   }

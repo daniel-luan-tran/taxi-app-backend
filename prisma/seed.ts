@@ -29,6 +29,9 @@ const main = async (): Promise<void> => {
         active: true,
       },
     }),
+    prisma.driverType.createMany({
+      data: [{ name: 'Car' }, { name: 'Van' }, { name: 'Motobike' }],
+    }),
   ]);
 };
 

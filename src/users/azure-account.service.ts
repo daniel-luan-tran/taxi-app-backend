@@ -21,24 +21,28 @@ export class AzureAccountsService {
           not: null,
         },
       },
+      include: { User: true, Driver: true, Staff: true },
     });
   }
 
   public async findById(id: string): Promise<AccountEntity> {
     return this.prismaService.account.findFirst({
       where: { id },
+      include: { User: true, Driver: true, Staff: true },
     });
   }
 
   public async findByAzureOid(azureOid: string): Promise<AccountEntity> {
     return this.prismaService.account.findFirst({
       where: { azureOid },
+      include: { User: true, Driver: true, Staff: true },
     });
   }
 
   public async findByEmail(email: string): Promise<AccountEntity> {
     return this.prismaService.account.findFirst({
       where: { email },
+      include: { User: true, Driver: true, Staff: true },
     });
   }
 
@@ -55,6 +59,7 @@ export class AzureAccountsService {
       data: {
         ...user,
       },
+      include: { User: true, Driver: true, Staff: true },
     });
   }
 
@@ -75,6 +80,7 @@ export class AzureAccountsService {
       data: {
         ...user,
       },
+      include: { User: true, Driver: true, Staff: true },
     });
   }
 
@@ -90,6 +96,7 @@ export class AzureAccountsService {
       data: {
         active: false,
       },
+      include: { User: true, Driver: true, Staff: true },
     });
   }
 }

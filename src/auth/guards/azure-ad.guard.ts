@@ -12,6 +12,7 @@ import { AzureUsersService } from 'src/users/azure-users.service';
 import { AzureAccountsService } from 'src/users/azure-account.service';
 import { AzureDriversService } from 'src/users/azure-drivers.service';
 import { AzureStaffsService } from 'src/users/azure-staffs.service';
+import { AccountEntity } from 'src/users/entities/account.entity';
 const FRONTEND_URL = process.env.FRONTEND_URL;
 
 @Injectable()
@@ -231,7 +232,7 @@ export class AzureADAuthGuardLoginForDrivers extends AuthGuard('bearer') {
     request.userProfile = userProfile;
     request.azureOid = azureOid;
     request.token = token;
-    const user: UserEntity = request.userProfile;
+    const user: AccountEntity = request.userProfile;
     request.user = user;
     request.user.id = _user.id;
 

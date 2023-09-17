@@ -54,25 +54,33 @@ model Account {
 
 model User {
   id             String           @id @default(uuid()) @db.Uuid
-  accountId      String           @db.Uuid @unique
+  accountId      String           @unique @db.Uuid
   account        Account          @relation(fields: [accountId], references: [id])
   BookingHistory BookingHistory[]
 
   @@map("users")
 }
 
+model DriverType {
+  id     Int      @id @default(autoincrement())
+  name   String
+  Driver Driver[]
+}
+
 model Driver {
   id             String           @id @default(uuid()) @db.Uuid
-  accountId      String           @db.Uuid @unique
+  accountId      String           @unique @db.Uuid
   account        Account          @relation(fields: [accountId], references: [id])
   BookingHistory BookingHistory[]
+  driverTypeId   Int
+  driverType     DriverType       @relation(fields: [driverTypeId], references: [id])
 
   @@map("drivers")
 }
 
 model Staff {
-  id             String           @id @default(uuid()) @db.Uuid
-  accountId String   @db.Uuid @unique
+  id        String  @id @default(uuid()) @db.Uuid
+  accountId String  @unique @db.Uuid
   account   Account @relation(fields: [accountId], references: [id])
 
   @@map("staffs")
