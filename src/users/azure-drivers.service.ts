@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { AzureAccountsService } from './azure-account.service';
 import { AccountEntity } from './entities/account.entity';
 import { UpdateAccountDto } from './dto/update-account.dto';
+import { CreateAccountDto } from './dto/create-account.dto';
 
 @Injectable()
 export class AzureDriversService {
@@ -48,8 +49,8 @@ export class AzureDriversService {
     });
   }
 
-  public async create(data: CreateDriverDto): Promise<DriverEntity> {
-    const { ...user } = data;
+  public async create(data: CreateAccountDto): Promise<AccountEntity> {
+    const { password, ...user } = data;
     this.logger.log({
       context: `${AzureDriversService.name} ${this.create.name}`,
       event_type: LogEventType.DRIVER,
@@ -57,11 +58,13 @@ export class AzureDriversService {
       metadata: { ..._.pick(data, ['id', 'role']) },
     });
 
-    return this.prismaService.driver.create({
+    return this.prismaService.account.create({
       data: {
         ...user,
+        Driver: {
+          create: {},
+        },
       },
-      include: { account: true },
     });
   }
 

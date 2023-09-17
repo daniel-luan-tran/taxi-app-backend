@@ -215,7 +215,7 @@ export class AzureADAuthGuardLoginForDrivers extends AuthGuard('bearer') {
       displayName,
     };
     if (!_user) {
-      _user = await this.azureAccountsService.create({
+      _user = await this.azureDriversService.create({
         ...userProfile,
       });
     }

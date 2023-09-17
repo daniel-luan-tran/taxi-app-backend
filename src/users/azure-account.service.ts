@@ -59,7 +59,6 @@ export class AzureAccountsService {
       data: {
         ...user,
       },
-      include: { User: true, Driver: true, Staff: true },
     });
   }
 

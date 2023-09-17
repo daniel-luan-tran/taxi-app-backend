@@ -30,5 +30,5 @@ export class CreateAccountDto {
   address?: string | null;
 
   @IsOptional()
-  driverTypeId: number;
+  driverTypeId?: number;
 }

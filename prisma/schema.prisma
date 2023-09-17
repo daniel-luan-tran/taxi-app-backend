@@ -70,11 +70,11 @@ model DriverType {
 }
 
 model Driver {
-  id           String     @id @default(uuid()) @db.Uuid
-  accountId    String     @unique @db.Uuid
-  account      Account    @relation(fields: [accountId], references: [id])
-  driverTypeId Int
-  driverType   DriverType @relation(fields: [driverTypeId], references: [id])
+  id           String      @id @default(uuid()) @db.Uuid
+  accountId    String      @unique @db.Uuid
+  account      Account     @relation(fields: [accountId], references: [id])
+  driverTypeId Int?
+  driverType   DriverType? @relation(fields: [driverTypeId], references: [id])
 
   @@map("drivers")
 }
