@@ -27,7 +27,6 @@ import {
 } from './guards/azure-ad.guard';
 import { AzureUsersService } from 'src/users/azure-users.service';
 import { CurrentDriver } from 'src/users/drivers.decorator';
-import { OIDCStrategyPassportForDrivers } from './strategies/oidc.strategy';
 
 @Controller('auth')
 export class AuthController {
@@ -75,8 +74,8 @@ export class AuthController {
     // The actual login will be handled by Azure AD
   }
 
-  @Get('/azureAD/login-for-driver')
-  @UseGuards(OIDCStrategyPassportForDrivers)
+  @Get('/azureAD/login-for-drivers')
+  @UseGuards(AzureAdGuardForDrivers)
   public async azureADLoginForDrivers() {
     // This endpoint will trigger the Azure AD authentication flow
     // The actual login will be handled by Azure AD

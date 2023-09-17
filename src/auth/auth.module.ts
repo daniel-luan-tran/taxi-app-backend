@@ -18,6 +18,7 @@ import { AzureUsersService } from 'src/users/azure-users.service';
 import { BearerStrategyPassport } from './strategies/bearer.strategy';
 import {
   OIDCStrategyPassport,
+  OIDCStrategyPassportForDrivers,
   OIDCStrategyPassportForStaffs,
 } from './strategies/oidc.strategy';
 import { AzureAccountsService } from 'src/users/azure-account.service';
@@ -36,6 +37,7 @@ import { AzureAccountsService } from 'src/users/azure-account.service';
     SessionSerializer,
     OIDCStrategyPassport,
     OIDCStrategyPassportForStaffs,
+    OIDCStrategyPassportForDrivers,
     AzureADAuthGuardLogin,
     AzureADAuthGuardLoginForStaffs,
     AzureAdGuard,
