@@ -31,32 +31,32 @@ model Password {
 }
 
 model Account {
-  id             String           @id @default(uuid()) @db.Uuid
-  email          String           @unique
-  firstName      String?          @map("first_name")
-  lastName       String?          @map("last_name")
-  active         Boolean
-  createdAt      DateTime         @default(now()) @map("created_at")
-  createdUserId  String?          @map("created_user_id") @db.Uuid
-  updatedAt      DateTime         @default(now()) @updatedAt @map("updated_at")
-  updatedUserId  String?          @map("updated_user_id") @db.Uuid
-  azureOid       String?          @map("azure_oid")
-  phoneNumber    String?          @map("phone_number")
-  displayName    String?          @map("display_name")
-  address        String?
-  password       Password?
-  User           User?
-  Driver         Driver?
-  Staff          Staff?
-  BookingHistory BookingHistory[]
+  id            String    @id @default(uuid()) @db.Uuid
+  email         String    @unique
+  firstName     String?   @map("first_name")
+  lastName      String?   @map("last_name")
+  active        Boolean
+  createdAt     DateTime  @default(now()) @map("created_at")
+  createdUserId String?   @map("created_user_id") @db.Uuid
+  updatedAt     DateTime  @default(now()) @updatedAt @map("updated_at")
+  updatedUserId String?   @map("updated_user_id") @db.Uuid
+  azureOid      String?   @map("azure_oid")
+  phoneNumber   String?   @map("phone_number")
+  displayName   String?   @map("display_name")
+  address       String?
+  password      Password?
+  User          User?
+  Driver        Driver?
+  Staff         Staff?
 
   @@map("accounts")
 }
 
 model User {
-  id        String  @id @default(uuid()) @db.Uuid
-  accountId String  @unique @db.Uuid
-  account   Account @relation(fields: [accountId], references: [id])
+  id             String           @id @default(uuid()) @db.Uuid
+  accountId      String           @unique @db.Uuid
+  account        Account          @relation(fields: [accountId], references: [id])
+  BookingHistory BookingHistory[]
 
   @@map("users")
 }
@@ -70,11 +70,12 @@ model DriverType {
 }
 
 model Driver {
-  id           String      @id @default(uuid()) @db.Uuid
-  accountId    String      @unique @db.Uuid
-  account      Account     @relation(fields: [accountId], references: [id])
-  driverTypeId Int?
-  driverType   DriverType? @relation(fields: [driverTypeId], references: [id])
+  id             String           @id @default(uuid()) @db.Uuid
+  accountId      String           @unique @db.Uuid
+  account        Account          @relation(fields: [accountId], references: [id])
+  driverTypeId   Int?
+  driverType     DriverType?      @relation(fields: [driverTypeId], references: [id])
+  BookingHistory BookingHistory[]
 
   @@map("drivers")
 }
@@ -90,8 +91,9 @@ model Staff {
 model BookingHistory {
   id       String   @id @default(uuid()) @db.Uuid
   userId   String   @db.Uuid
-  account  Account  @relation(fields: [userId], references: [id])
-  driverId String
+  user     User     @relation(fields: [userId], references: [accountId])
+  driverId String   @db.Uuid
+  driver   Driver   @relation(fields: [driverId], references: [accountId])
   bookAt   DateTime @default(now()) @map("book_at")
   from     String
   to       String
