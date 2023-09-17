@@ -55,3 +55,25 @@ export class OIDCStrategyPassportForStaffs extends PassportStrategy(
     super(options);
   }
 }
+
+@Injectable()
+export class OIDCStrategyPassportForDrivers extends PassportStrategy(
+  OIDCStrategy,
+  'azure-ad-for-drivers',
+) {
+  constructor() {
+    const options: IOIDCStrategyOptionWithRequest = {
+      passReqToCallback: true,
+      identityMetadata: ID_METADATA,
+      clientID: CLIENT_ID,
+      responseType: 'code id_token',
+      responseMode: 'form_post',
+      redirectUrl: URL_CALLBACK_FOR_STAFFS,
+      allowHttpForRedirectUrl: true,
+      clientSecret: CLIENT_SECRET,
+      validateIssuer: true,
+      scope: ['openid', 'profile', 'email', 'user.read', 'offline_access'],
+    };
+    super(options);
+  }
+}
