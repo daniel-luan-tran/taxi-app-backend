@@ -11,6 +11,7 @@ const CLIENT_SECRET = process.env.CLIENT_SECRET;
 const ID_METADATA = process.env.ID_METADATA;
 const URL_CALLBACK = process.env.URL_CALLBACK;
 const URL_CALLBACK_FOR_STAFFS = process.env.URL_CALLBACK_FOR_STAFFS;
+const URL_CALLBACK_FOR_DRIVERS = process.env.URL_CALLBACK_FOR_DRIVERS;
 
 @Injectable()
 export class OIDCStrategyPassport extends PassportStrategy(
@@ -68,7 +69,7 @@ export class OIDCStrategyPassportForDrivers extends PassportStrategy(
       clientID: CLIENT_ID,
       responseType: 'code id_token',
       responseMode: 'form_post',
-      redirectUrl: URL_CALLBACK_FOR_STAFFS,
+      redirectUrl: URL_CALLBACK_FOR_DRIVERS,
       allowHttpForRedirectUrl: true,
       clientSecret: CLIENT_SECRET,
       validateIssuer: true,
