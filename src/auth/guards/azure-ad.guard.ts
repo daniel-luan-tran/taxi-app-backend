@@ -223,12 +223,6 @@ export class AzureADAuthGuardLoginForDrivers extends AuthGuard('bearer') {
       return response.redirect(`${FRONTEND_URL}?userInactive=true`);
     }
 
-    // Check azureOid from drivers table
-    const __user = await this.azureDriversService.findByAzureOid(azureOid);
-    if (!__user) {
-      return response.redirect(`${FRONTEND_URL}?invalidRole=true`);
-    }
-
     request.userProfile = userProfile;
     request.azureOid = azureOid;
     request.token = token;

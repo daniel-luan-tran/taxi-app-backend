@@ -22,6 +22,7 @@ import {
   OIDCStrategyPassportForStaffs,
 } from './strategies/oidc.strategy';
 import { AzureAccountsService } from 'src/users/azure-account.service';
+import { AzureDriversService } from 'src/users/azure-drivers.service';
 
 @Module({
   imports: [
@@ -46,6 +47,7 @@ import { AzureAccountsService } from 'src/users/azure-account.service';
     BearerStrategyPassport,
     AzureUsersService,
     AzureAccountsService,
+    AzureDriversService,
   ],
   controllers: [AuthController],
   exports: [AuthService, PasswordService],

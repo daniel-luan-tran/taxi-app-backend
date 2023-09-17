@@ -9,6 +9,7 @@ import { AzureUsersController } from './azure-users.controller';
 import { AzureDriversService } from './azure-drivers.service';
 import { AzureAccountsService } from './azure-account.service';
 import { AzureStaffsService } from './azure-staffs.service';
+import { AzureDriversController } from './azure-drivers.controller';
 
 @Module({
   imports: [LoggerModule],
@@ -21,7 +22,7 @@ import { AzureStaffsService } from './azure-staffs.service';
     AzureAccountsService,
     AzureStaffsService,
   ],
-  controllers: [UsersController, AzureUsersController],
+  controllers: [UsersController, AzureUsersController, AzureDriversController],
   exports: [UsersService, AzureUsersService],
 })
 export class UsersModule {}

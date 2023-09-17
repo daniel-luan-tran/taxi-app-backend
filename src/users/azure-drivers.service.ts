@@ -7,6 +7,8 @@ import { LogEventReason, LogEventType } from 'src/logger/entities/log-events';
 import { CustomLogger } from '../logger/logger.service';
 import * as _ from 'lodash';
 import { AzureAccountsService } from './azure-account.service';
+import { AccountEntity } from './entities/account.entity';
+import { UpdateAccountDto } from './dto/update-account.dto';
 
 @Injectable()
 export class AzureDriversService {
@@ -65,9 +67,10 @@ export class AzureDriversService {
 
   public async update(
     id: string,
-    data: UpdateDriverDto,
-  ): Promise<DriverEntity> {
-    const { ...user } = data;
+    data: UpdateAccountDto,
+  ): Promise<AccountEntity> {
+    const { password, ...user } = data;
+
     this.logger.log({
       context: `${AzureDriversService.name} ${this.deleteUser.name}`,
       event_type: LogEventType.DRIVER,
@@ -75,13 +78,25 @@ export class AzureDriversService {
       metadata: { ..._.pick(data, ['id']) },
     });
 
-    return this.prismaService.driver.update({
+    const res = await this.prismaService.account.update({
       where: { id },
       data: {
         ...user,
+        Driver: {
+          upsert: {
+            create: {
+              driverTypeId: user.driverTypeId,
+            },
+            update: {
+              driverTypeId: user.driverTypeId,
+            },
+          },
+        },
       },
-      include: { account: true },
+      include: { Driver: true },
     });
+
+    return res;
   }
 
   public async deleteUser(id: string): Promise<DriverEntity> {

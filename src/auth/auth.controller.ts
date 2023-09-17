@@ -42,11 +42,11 @@ export class AuthController {
     return user;
   }
 
-  @Get('/roles')
-  @UseGuards(SessionAuthGuard)
-  public async getRoles(): Promise<Role[]> {
-    return Promise.resolve(Object.values(Role));
-  }
+  // @Get('/roles')
+  // @UseGuards(SessionAuthGuard)
+  // public async getRoles(): Promise<Role[]> {
+  //   return Promise.resolve(Object.values(Role));
+  // }
 
   @Get('/check')
   @UseGuards(SessionAuthGuard)

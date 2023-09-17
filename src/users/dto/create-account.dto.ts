@@ -28,4 +28,7 @@ export class CreateAccountDto {
 
   @IsString()
   address?: string | null;
+
+  @IsOptional()
+  driverTypeId: number;
 }

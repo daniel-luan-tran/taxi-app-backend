@@ -65,6 +65,8 @@ model DriverType {
   id     Int      @id @default(autoincrement())
   name   String
   Driver Driver[]
+
+  @@map("driver_types")
 }
 
 model Driver {
