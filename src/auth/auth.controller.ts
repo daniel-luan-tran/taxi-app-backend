@@ -55,7 +55,6 @@ export class AuthController {
   @UseGuards(SessionAuthGuard)
   public async check(@CurrentAccount() user): Promise<AccountEntity> {
     const _user = await this.azureAccountService.findById(user.id);
-    console.log('sadasdasfsdgfsagsg', _user);
     return _user;
   }
 
@@ -113,8 +112,9 @@ export class AuthController {
 
   @Get('/azureAD/check')
   @UseGuards(SessionAuthGuard)
-  public async test(@CurrentAccount() user) {
-    return user;
+  public async test(@CurrentAccount() user: AccountEntity) {
+    const _user = await this.azureAccountService.findById(user.id);
+    return _user;
   }
 
   @Get('/azureAD/delete-user')
