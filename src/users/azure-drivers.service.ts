@@ -10,6 +10,7 @@ import { AzureAccountsService } from './azure-account.service';
 import { AccountEntity } from './entities/account.entity';
 import { UpdateAccountDto } from './dto/update-account.dto';
 import { CreateAccountDto } from './dto/create-account.dto';
+import { DriverType } from '@prisma/client';
 
 @Injectable()
 export class AzureDriversService {
@@ -51,6 +52,18 @@ export class AzureDriversService {
 
   public async getDriverTypeList(): Promise<DriverTypeEntity[]> {
     return this.prismaService.driverType.findMany();
+  }
+
+  public async getDriverType(user: AccountEntity): Promise<DriverType> {
+    const res = await this.prismaService.account.findFirst({
+      where: { id: user.id },
+      include: {
+        Driver: {
+          select: { driverType: true },
+        },
+      },
+    });
+    return res.Driver.driverType;
   }
 
   public async create(data: CreateAccountDto): Promise<AccountEntity> {

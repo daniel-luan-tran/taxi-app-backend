@@ -17,6 +17,7 @@ import { AzureAccountsService } from './azure-account.service';
 import { DriverRoleGuard } from './guards/driver-role.guards';
 import { UpdateAccountDto } from './dto/update-account.dto';
 import { CreateAccountDto } from './dto/create-account.dto';
+import { CurrentDriver } from './drivers.decorator';
 
 @Controller('azureDrivers')
 @UseGuards(SessionAuthGuard)
@@ -33,8 +34,8 @@ export class AzureDriversController {
 
   @Get('/check-role')
   @UseGuards(DriverRoleGuard)
-  public async checkRole() {
-    return { msg: 'OK' };
+  public async checkRole(@CurrentDriver() user: AccountEntity) {
+    return this.driversService.getDriverType(user);
   }
 
   @Get('/get-driver-types')
