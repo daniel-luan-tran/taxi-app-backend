@@ -29,7 +29,7 @@ export class DriverRoleGuard implements CanActivate {
     const __user = await this.azureDriversService.findByAzureOid(
       req.user.azureOid,
     );
-    if (!__user || !__user.driverTypeId) {
+    if (!__user) {
       // return res.redirect(`${MOBILE_URL}?invalidRole=true`);
       throw new ForbiddenException();
     }
