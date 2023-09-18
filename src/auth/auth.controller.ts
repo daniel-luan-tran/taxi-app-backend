@@ -55,6 +55,7 @@ export class AuthController {
   @UseGuards(SessionAuthGuard)
   public async check(@CurrentAccount() user): Promise<AccountEntity> {
     const _user = await this.azureAccountService.findById(user.id);
+    console.log('sadasdasfsdgfsagsg', _user);
     return _user;
   }
 
