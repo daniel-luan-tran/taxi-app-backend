@@ -1,6 +1,7 @@
 import {
   CanActivate,
   ExecutionContext,
+  ForbiddenException,
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
@@ -8,7 +9,7 @@ import { Request } from 'express';
 import { isNil } from 'lodash';
 import { AccountEntity } from '../entities/account.entity';
 import { AzureDriversService } from '../azure-drivers.service';
-const FRONTEND_URL = process.env.FRONTEND_URL;
+const MOBILE_URL = process.env.MOBILE_URL;
 
 @Injectable()
 export class DriverRoleGuard implements CanActivate {
@@ -29,7 +30,8 @@ export class DriverRoleGuard implements CanActivate {
       req.user.azureOid,
     );
     if (!__user) {
-      return res.redirect(`${FRONTEND_URL}?invalidRole=true`);
+      // return res.redirect(`${MOBILE_URL}?invalidRole=true`);
+      throw new ForbiddenException();
     }
     return true;
   }

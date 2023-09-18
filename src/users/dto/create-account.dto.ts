@@ -1,4 +1,10 @@
-import { IsBoolean, IsEmail, IsOptional, IsString } from 'class-validator';
+import {
+  IsBoolean,
+  IsEmail,
+  IsOptional,
+  IsString,
+  IsNotEmpty,
+} from 'class-validator';
 
 export class CreateAccountDto {
   @IsEmail()
@@ -24,11 +30,13 @@ export class CreateAccountDto {
   displayName?: string | null;
 
   @IsString()
+  @IsNotEmpty()
   phoneNumber?: string | null;
 
   @IsString()
+  @IsNotEmpty()
   address?: string | null;
 
-  @IsOptional()
+  @IsNotEmpty()
   driverTypeId?: number;
 }
