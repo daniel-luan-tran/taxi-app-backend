@@ -37,6 +37,11 @@ export class AzureDriversController {
     return { msg: 'OK' };
   }
 
+  @Get('/get-driver-types')
+  public async getDriverTypeList() {
+    return this.driversService.getDriverTypeList();
+  }
+
   @Get('/:id')
   public async findById(@Param('id') id: string): Promise<AccountEntity> {
     return this.accountsService.findById(id);

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'nestjs-prisma';
 import { CreateDriverDto } from './dto/create-driver.dto';
 import { UpdateDriverDto } from './dto/update-driver.dto';
-import { DriverEntity } from './entities/driver.entity';
+import { DriverEntity, DriverTypeEntity } from './entities/driver.entity';
 import { LogEventReason, LogEventType } from 'src/logger/entities/log-events';
 import { CustomLogger } from '../logger/logger.service';
 import * as _ from 'lodash';
@@ -47,6 +47,10 @@ export class AzureDriversService {
       where: { accountId: account.id },
       include: { account: true },
     });
+  }
+
+  public async getDriverTypeList(): Promise<DriverTypeEntity[]> {
+    return this.prismaService.driverType.findMany();
   }
 
   public async create(data: CreateAccountDto): Promise<AccountEntity> {
