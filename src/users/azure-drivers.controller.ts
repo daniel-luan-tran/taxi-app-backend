@@ -16,6 +16,7 @@ import { AccountEntity } from './entities/account.entity';
 import { AzureAccountsService } from './azure-account.service';
 import { DriverRoleGuard } from './guards/driver-role.guards';
 import { UpdateAccountDto } from './dto/update-account.dto';
+import { CreateAccountDto } from './dto/create-account.dto';
 
 @Controller('azureDrivers')
 @UseGuards(SessionAuthGuard)
@@ -49,7 +50,7 @@ export class AzureDriversController {
   }
 
   @Post('/')
-  public async create(@Body() data: CreateDriverDto): Promise<DriverEntity> {
+  public async create(@Body() data: CreateAccountDto): Promise<AccountEntity> {
     return this.driversService.create(data);
   }
 
