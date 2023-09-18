@@ -28,7 +28,11 @@ export class AzureAccountsService {
   public async findById(id: string): Promise<AccountEntity> {
     return this.prismaService.account.findFirst({
       where: { id },
-      include: { User: true, Driver: true, Staff: true },
+      include: {
+        User: true,
+        Driver: { include: { driverType: true } },
+        Staff: true,
+      },
     });
   }
 

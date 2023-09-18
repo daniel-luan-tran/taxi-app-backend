@@ -5,6 +5,7 @@ import {
   IsString,
   IsNotEmpty,
 } from 'class-validator';
+import { DriverEntity } from '../entities/driver.entity';
 
 export class CreateAccountDto {
   @IsEmail()
@@ -37,6 +38,5 @@ export class CreateAccountDto {
   @IsNotEmpty()
   address?: string | null;
 
-  @IsNotEmpty()
-  driverTypeId?: number;
+  driverTypeId?: number | null;
 }
