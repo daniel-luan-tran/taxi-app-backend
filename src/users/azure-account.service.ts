@@ -66,7 +66,7 @@ export class AzureAccountsService {
     id: string,
     data: UpdateAccountDto,
   ): Promise<AccountEntity> {
-    const { password, ...user } = data;
+    const { password, driverTypeId, ...user } = data;
     this.logger.log({
       context: `${AzureAccountsService.name} ${this.update.name}`,
       event_type: LogEventType.ACCOUNT,
@@ -78,6 +78,11 @@ export class AzureAccountsService {
       where: { id },
       data: {
         ...user,
+        Driver: {
+          update: {
+            driverTypeId: driverTypeId,
+          },
+        },
       },
       include: { User: true, Driver: true, Staff: true },
     });
