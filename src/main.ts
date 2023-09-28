@@ -8,14 +8,25 @@ import helmet from 'helmet';
 import { PrismaClientExceptionFilter, PrismaService } from 'nestjs-prisma';
 import * as passport from 'passport';
 import { AppModule } from './app.module';
-import http from 'http';
-import { Server } from 'socket.io';
-import { SocketGateway } from './socket/socket.service';
-import { IoAdapter } from '@nestjs/platform-socket.io';
-import { SocketIoAdapter } from './socket/socketio.adapter';
+import * as fs from 'fs';
+import * as path from 'path';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const ssl = process.env.SSL === 'true' ? true : false;
+  let app = null;
+  let hostname = null;
+  if (ssl) {
+    const keyPath = process.env.SSL_KEY_PATH || '';
+    const certPath = process.env.SSL_CERT_PATH || '';
+    const httpsOptions = {
+      key: fs.readFileSync(path.join(keyPath)),
+      cert: fs.readFileSync(path.join(certPath)),
+    };
+    app = await NestFactory.create(AppModule, { httpsOptions });
+    hostname = process.env.HOST_NAME || 'localhost';
+  } else {
+    app = await NestFactory.create(AppModule);
+  }
 
   // Prisma ORM
   const prismaService = app.get(PrismaService);
@@ -70,28 +81,18 @@ async function bootstrap() {
     defaultVersion: '1',
   });
 
-  // const server = http.createServer();
-  // app.useWebSocketAdapter(new SocketIoAdapter(app));
-  // const io = new Server(server);
-
-  // io.on('connection', (socket) => {
-  //   console.log('a user connected');
-
-  //   const connectData = {
-  //     status: true,
-  //     message: 'Welcome to the socket.io server!',
-  //     userCount: io.engine.clientsCount, // Number of connected clients
-  //   };
-  //   socket.emit('welcome', connectData);
-  //   socket.on('disconnect', () => {
-  //     console.log('a user disconnected');
-  //   });
-  // });
-
   // Start server
   const port = process.env.PORT || 3000;
-  console.log('App listing port: ', port);
-  await app.listen(port);
+
+  if (ssl) {
+    await app.listen(port, hostname, () => {
+      const address =
+        'http' + (ssl ? 's' : '') + '://' + hostname + ':' + port + '/';
+      console.log('Addess: ', address);
+    });
+  } else {
+    await app.listen(port);
+  }
 }
 
 bootstrap();

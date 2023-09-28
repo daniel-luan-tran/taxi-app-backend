@@ -34,8 +34,8 @@ export class AzureDriversController {
 
   @Get('/check-role')
   @UseGuards(DriverRoleGuard)
-  public async checkRole(@CurrentDriver() user: AccountEntity) {
-    return this.driversService.getDriverType(user);
+  public async checkRole(@CurrentDriver() user: DriverEntity) {
+    return user;
   }
 
   @Get('/get-driver-types')

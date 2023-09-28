@@ -12,6 +12,8 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserEntity } from './entities/user.entity';
 import { AzureUsersService } from './azure-users.service';
+import { CurrentUser } from './users.decorator';
+import { UserRoleGuard } from './guards/user-role.guards';
 
 @Controller('azureUsers')
 @UseGuards(SessionAuthGuard)
@@ -21,6 +23,12 @@ export class AzureUsersController {
   @Get('/')
   public async findAll(): Promise<UserEntity[]> {
     return this.usersService.findAll();
+  }
+
+  @Get('/check-role')
+  @UseGuards(UserRoleGuard)
+  public async checkRole(@CurrentUser() user: UserEntity) {
+    return user;
   }
 
   @Get('/:id')
