@@ -15,7 +15,7 @@ export class PasswordService {
 
   public async getPasswordRecord(userId: string): Promise<Password> {
     return await this.prismaService.password.findFirst({
-      where: { id: userId },
+      where: { accountId: userId },
     });
   }
 

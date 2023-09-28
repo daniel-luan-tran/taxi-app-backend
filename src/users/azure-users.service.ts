@@ -25,7 +25,7 @@ export class AzureUsersService {
 
   public async findById(id: string): Promise<UserEntity> {
     return this.prismaService.user.findFirst({
-      where: { id },
+      where: { accountId: id },
       include: { account: true },
     });
   }

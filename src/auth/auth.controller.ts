@@ -29,6 +29,7 @@ import { AzureUsersService } from 'src/users/azure-users.service';
 import { CurrentDriver } from 'src/users/drivers.decorator';
 import { AccountEntity } from 'src/users/entities/account.entity';
 import { AzureAccountsService } from 'src/users/azure-account.service';
+import { UsersService } from 'src/users/users.service';
 
 @Controller('auth')
 export class AuthController {
@@ -36,6 +37,7 @@ export class AuthController {
     private readonly authService: AuthService,
     private readonly azureUserService: AzureUsersService,
     private readonly azureAccountService: AzureAccountsService,
+    private readonly userService: UsersService,
   ) {}
 
   @Post('/login')
@@ -56,6 +58,18 @@ export class AuthController {
   public async check(@CurrentAccount() user): Promise<AccountEntity> {
     const _user = await this.azureAccountService.findById(user.id);
     return _user;
+  }
+
+  @Get('/local-check')
+  @UseGuards(SessionAuthGuard)
+  public async localCheck(@CurrentAccount() user): Promise<AccountEntity> {
+    const _user = await this.userService.findById(user.id);
+    return _user;
+  }
+
+  @Get('/hello')
+  public async hello(): Promise<string> {
+    return 'Hello';
   }
 
   @Delete('/logout')

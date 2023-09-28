@@ -29,7 +29,7 @@ export class AzureDriversService {
 
   public async findById(id: string): Promise<DriverEntity> {
     return this.prismaService.driver.findFirst({
-      where: { id },
+      where: { accountId: id },
       include: { account: true },
     });
   }
