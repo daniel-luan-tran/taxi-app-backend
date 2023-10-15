@@ -7,26 +7,38 @@ import {
   SubscribeMessage,
   MessageBody,
 } from '@nestjs/websockets';
+import {
+  BadRequestException,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
+import { Account, BOOKINGSTATUS } from '@prisma/client';
 import { Server, Socket } from 'socket.io';
+import { BookingHistoryService } from 'src/booking-history/booking-history.service';
+import { CustomLogger } from 'src/logger/logger.service';
+import { CreateBookingDto } from 'src/booking-history/dto/create-booking-history.dto';
 
 @WebSocketGateway()
 export class SocketGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
 {
+  constructor(private readonly bookingHistoryService: BookingHistoryService) {}
   @WebSocketServer()
   server: Server;
 
   driverSocket: Socket = null;
   passengerSocket: Socket = null;
+  passengerAccount: Account = null;
+  passengerRoute: any = null;
 
-  afterInit(server: any) {
+  public afterInit(server: any) {
     console.log('Init gateway');
     this.server.on('connection', (socket) => {
       console.log(socket.id);
     });
   }
 
-  handleConnection(socket: Socket) {
+  public handleConnection(socket: Socket) {
     console.log('A user connected');
 
     const connectData = {
@@ -38,6 +50,17 @@ export class SocketGateway
     socket.on('passengerRequest', (data) => {
       this.driverSocket = socket;
       console.log('passengerRequest', data);
+      if (this.driverSocket)
+        this.driverSocket.on('driverDisconnect', () => {
+          this.passengerSocket.emit('driverDisconnect');
+          this.driverSocket.disconnect();
+        });
+      if (this.passengerSocket)
+        this.passengerSocket.emit('passengerRequest', 'passengerRequest');
+    });
+
+    socket.on('foundDriver', (data) => {
+      if (this.driverSocket) this.driverSocket.emit('foundDriver', data);
     });
 
     socket.on('driverRequest', (data) => {
@@ -45,6 +68,9 @@ export class SocketGateway
       if (!this.driverSocket) return;
       console.log('driverRequest', data);
       this.driverSocket.emit('driverRequest', data);
+
+      this.passengerRoute = data.passengerRoute;
+      this.passengerAccount = data.passengerAccount;
 
       this.passengerSocket.on('passengerDisconnect', () => {
         console.log('passengerDisconnect');
@@ -68,12 +94,12 @@ export class SocketGateway
     });
   }
 
-  handleDisconnect(socket: Socket) {
+  public handleDisconnect(socket: Socket) {
     console.log('A user disconnected');
   }
 
   @SubscribeMessage('onNewMessage')
-  onNewMessage(@MessageBody() body: any) {
+  public onNewMessage(@MessageBody() body: any) {
     console.log(body);
   }
 }

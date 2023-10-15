@@ -65,6 +65,7 @@ export class AzureDriversController {
     @Param('id') id: string,
     @Body() data: UpdateAccountDto,
   ): Promise<AccountEntity> {
+    console.log(data);
     return this.accountsService.update(id, data);
   }
 }

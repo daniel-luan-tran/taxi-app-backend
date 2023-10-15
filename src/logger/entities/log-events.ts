@@ -6,6 +6,7 @@ export enum LogEventType {
   USER = 'USER',
   STAFF = 'STAFF',
   DRIVER = 'DRIVER',
+  BOOKING_HISTORY = 'BOOKING_HISTORY',
 }
 
 export enum LogEventReason {
@@ -25,6 +26,9 @@ export enum LogEventReason {
   DRIVER_CREATED = 'Driver created',
   DRIVER_UPDATED = 'Driver updated',
   DRIVER_DELETED = 'Driver deleted',
+  BOOKING_HISTORY_CREATED = 'Booking history created',
+  BOOKING_HISTORY_UPDATED = 'Booking history updated',
+  BOOKING_HISTORY_DELETED = 'Booking history deleted',
 }
 
 export interface LogEventFingerprint {

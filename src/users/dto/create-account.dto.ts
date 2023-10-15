@@ -5,38 +5,39 @@ import {
   IsString,
   IsNotEmpty,
 } from 'class-validator';
-import { DriverEntity } from '../entities/driver.entity';
 
 export class CreateAccountDto {
-  @IsEmail()
+  // @IsEmail()
   email: string;
 
   @IsString()
-  firstName?: string | null;
+  firstName?: string;
 
   @IsString()
-  lastName?: string | null;
+  lastName?: string;
 
   @IsString()
   @IsOptional()
-  password?: string | null;
+  password?: string;
 
   @IsBoolean()
   active: boolean;
 
   @IsString()
-  azureOid?: string | null;
+  @IsOptional()
+  azureOid?: string;
 
   @IsString()
-  displayName?: string | null;
-
-  @IsString()
-  @IsNotEmpty()
-  phoneNumber?: string | null;
+  displayName?: string;
 
   @IsString()
   @IsNotEmpty()
-  address?: string | null;
+  phoneNumber?: string;
 
-  driverTypeId?: number | null;
+  @IsString()
+  @IsNotEmpty()
+  address?: string;
+
+  @IsOptional()
+  driverTypeId?: number;
 }

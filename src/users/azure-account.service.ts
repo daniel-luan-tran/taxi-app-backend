@@ -77,12 +77,11 @@ export class AzureAccountsService {
       reason: LogEventReason.ACCOUNT_UPDATED,
       metadata: { ..._.pick(data, ['id']) },
     });
-
     return this.prismaService.account.update({
       where: { id },
       data: {
         ...user,
-        Driver: {
+        Driver: driverTypeId && {
           update: {
             driverTypeId: driverTypeId,
           },

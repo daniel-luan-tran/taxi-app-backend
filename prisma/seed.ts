@@ -27,6 +27,7 @@ const main = async (): Promise<void> => {
         email: 'user@dalutech',
         firstName: 'User',
         lastName: 'Test',
+        displayName: 'User Test',
         password: {
           create: { password },
         },
