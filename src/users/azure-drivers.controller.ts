@@ -5,6 +5,7 @@ import {
   Param,
   Post,
   Put,
+  Req,
   UseGuards,
 } from '@nestjs/common';
 import { SessionAuthGuard } from '../auth/guards/session-auth.guard';
@@ -34,8 +35,9 @@ export class AzureDriversController {
 
   @Get('/check-role')
   @UseGuards(DriverRoleGuard)
-  public async checkRole(@CurrentDriver() user: DriverEntity) {
-    return user;
+  public async checkRole(@Req() req: any) {
+    const driver = req.driver;
+    return driver;
   }
 
   @Get('/get-driver-types')

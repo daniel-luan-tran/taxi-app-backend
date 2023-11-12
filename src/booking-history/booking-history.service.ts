@@ -5,6 +5,7 @@ import { LogEventReason, LogEventType } from 'src/logger/entities/log-events';
 import * as _ from 'lodash';
 import { PrismaService } from 'nestjs-prisma';
 import { BookingHistoryEntity } from './entities/account.entity';
+import { UpdateBookingDto } from './dto/update-booking-history.dto';
 
 @Injectable()
 export class BookingHistoryService {
@@ -25,6 +26,24 @@ export class BookingHistoryService {
 
     return await this.prismaService.bookingHistory.create({
       data: data,
+      include: { user: true, driver: true },
+    });
+  }
+
+  public async updateBooking(
+    id: string,
+    data: UpdateBookingDto,
+  ): Promise<BookingHistoryEntity> {
+    this.logger.log({
+      context: `${BookingHistoryService.name} ${this.updateBooking.name}`,
+      event_type: LogEventType.BOOKING_HISTORY,
+      reason: LogEventReason.BOOKING_HISTORY_UPDATED,
+      metadata: { ..._.pick(data, ['id']) },
+    });
+
+    return await this.prismaService.bookingHistory.update({
+      where: { id },
+      data: { ...data },
       include: { user: true, driver: true },
     });
   }

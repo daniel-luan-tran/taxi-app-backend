@@ -1,4 +1,5 @@
 import { Account } from '@prisma/client';
+import { DriverEntity } from './driver.entity';
 
 export class AccountEntity implements Account {
   id: string;

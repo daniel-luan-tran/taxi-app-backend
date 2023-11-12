@@ -12,7 +12,8 @@ datasource db {
 
 enum BOOKINGSTATUS {
   SUCCESS
-  CANCELED
+  DRIVER_CANCEL
+  USER_CANCEL
 }
 
 model Session {
@@ -26,7 +27,7 @@ model Session {
 
 model Password {
   id        String   @id @default(uuid()) @db.Uuid
-  accountId String   @unique @map("user_id") @db.Uuid
+  accountId String   @unique @map("account_id") @db.Uuid
   password  String
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
@@ -59,7 +60,7 @@ model Account {
 
 model User {
   id             String           @id @default(uuid()) @db.Uuid
-  accountId      String           @unique @db.Uuid
+  accountId      String           @unique @map("account_id") @db.Uuid
   account        Account          @relation(fields: [accountId], references: [id])
   BookingHistory BookingHistory[]
 
@@ -67,18 +68,19 @@ model User {
 }
 
 model DriverType {
-  id     Int      @id @default(autoincrement())
-  name   String
-  Driver Driver[]
+  id       Int      @id @default(autoincrement())
+  name     String
+  priceUsd Float    @map("price_usd")
+  Driver   Driver[]
 
   @@map("driver_types")
 }
 
 model Driver {
   id             String           @id @default(uuid()) @db.Uuid
-  accountId      String           @unique @db.Uuid
+  accountId      String           @unique @map("account_id") @db.Uuid
   account        Account          @relation(fields: [accountId], references: [id])
-  driverTypeId   Int?
+  driverTypeId   Int?             @map("driver_type_id")
   driverType     DriverType?      @relation(fields: [driverTypeId], references: [id])
   BookingHistory BookingHistory[]
 
@@ -87,7 +89,7 @@ model Driver {
 
 model Staff {
   id        String  @id @default(uuid()) @db.Uuid
-  accountId String  @unique @db.Uuid
+  accountId String  @unique @map("account_id") @db.Uuid
   account   Account @relation(fields: [accountId], references: [id])
 
   @@map("staffs")
@@ -95,9 +97,9 @@ model Staff {
 
 model BookingHistory {
   id       String        @id @default(uuid()) @db.Uuid
-  userId   String        @db.Uuid
+  userId   String        @map("user_id") @db.Uuid
   user     User          @relation(fields: [userId], references: [accountId])
-  driverId String        @db.Uuid
+  driverId String        @map("driver_id") @db.Uuid
   driver   Driver        @relation(fields: [driverId], references: [accountId])
   bookAt   DateTime      @default(now()) @map("book_at")
   startLat Float         @map("start_lat")

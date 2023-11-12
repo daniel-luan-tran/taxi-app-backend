@@ -52,7 +52,11 @@ const main = async (): Promise<void> => {
       },
     }),
     prisma.driverType.createMany({
-      data: [{ name: 'Car' }, { name: 'Van' }, { name: 'Motobike' }],
+      data: [
+        { name: 'Car', priceUsd: 1.0 },
+        { name: 'Van', priceUsd: 2.0 },
+        { name: 'Motobike', priceUsd: 0.5 },
+      ],
     }),
   ]);
 };

@@ -18,9 +18,11 @@ export class DriverRoleGuard implements CanActivate {
   public async canActivate(ctx: ExecutionContext): Promise<boolean> {
     const res = ctx.switchToHttp().getResponse();
 
-    const req = ctx
-      .switchToHttp()
-      .getRequest<Request & { user: AccountEntity }>();
+    // const req = ctx
+    //   .switchToHttp()
+    //   .getRequest<Request & { user: AccountEntity }>();
+
+    const req = ctx.switchToHttp().getRequest();
 
     if (!(req as any).isAuthenticated() || isNil(req.user))
       throw new UnauthorizedException();
@@ -31,6 +33,7 @@ export class DriverRoleGuard implements CanActivate {
       // return res.redirect(`${MOBILE_URL}?invalidRole=true`);
       throw new ForbiddenException();
     }
+    req.driver = __user;
     return true;
   }
 }
