@@ -11,4 +11,5 @@ export class DriverEntity implements Driver {
 export class DriverTypeEntity implements DriverType {
   id: number;
   name: string;
+  priceUsd: number;
 }

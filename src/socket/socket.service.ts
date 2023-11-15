@@ -76,7 +76,6 @@ export class SocketGateway
         console.log('passengerDisconnect');
         this.driverSocket.emit('passengerDisconnect');
         this.passengerSocket.disconnect();
-        // Chỗ này hok cần
         this.driverSocket.disconnect();
       });
 
@@ -94,12 +93,12 @@ export class SocketGateway
         console.log('driverDisconnect');
         this.passengerSocket.emit('driverDisconnect');
         this.driverSocket.disconnect();
-        // Chỗ này hok cần
         this.passengerSocket.disconnect();
       });
 
       this.driverSocket.on('updatedBooking', () => {
         this.passengerSocket.emit('updatedBooking');
+        this.driverSocket.disconnect();
       });
     });
   }
