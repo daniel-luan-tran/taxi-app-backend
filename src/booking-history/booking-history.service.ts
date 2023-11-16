@@ -14,6 +14,15 @@ export class BookingHistoryService {
     private readonly logger: CustomLogger,
   ) {}
 
+  public async getBookingHistory(): Promise<BookingHistoryEntity[]> {
+    return await this.prismaService.bookingHistory.findMany({
+      include: {
+        user: { include: { account: true } },
+        driver: { include: { account: true, driverType: true } },
+      },
+    });
+  }
+
   public async addNewBooking(
     data: CreateBookingDto,
   ): Promise<BookingHistoryEntity> {

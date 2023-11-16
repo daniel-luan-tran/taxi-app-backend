@@ -20,6 +20,11 @@ import { BookingHistoryEntity } from './entities/account.entity';
 export class BookingHistoryController {
   constructor(private readonly bookingHistoryService: BookingHistoryService) {}
 
+  @Get('/')
+  public async getBookingHistory(): Promise<BookingHistoryEntity[]> {
+    return await this.bookingHistoryService.getBookingHistory();
+  }
+
   @Post('/')
   public async addNewBooking(
     @Body() data: CreateBookingDto,
