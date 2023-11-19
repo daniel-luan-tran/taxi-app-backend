@@ -55,7 +55,7 @@ async function bootstrap() {
         maxAge: 24 * 60 * 60 * 1000, // 1 Day
         sameSite: 'none',
         httpOnly: true,
-        // domain: 'your_domain', // For deploy
+        domain: '.onrender.com', // For deploy
       },
       store: new PrismaSessionStore(new PrismaClient(), {
         checkPeriod: 2 * 60 * 1000, // 2 Min
