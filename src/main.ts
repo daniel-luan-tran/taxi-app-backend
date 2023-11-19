@@ -45,7 +45,6 @@ async function bootstrap() {
   );
 
   // Cookies and sessions
-  app.set('trust proxy', 1);
   app.use(cookieParser());
   app.use(
     session({
@@ -56,6 +55,7 @@ async function bootstrap() {
         maxAge: 24 * 60 * 60 * 1000, // 1 Day
         sameSite: 'strict',
         httpOnly: true,
+        domain: '.onrender.com', // For deploy
       },
       store: new PrismaSessionStore(new PrismaClient(), {
         checkPeriod: 2 * 60 * 1000, // 2 Min
