@@ -54,7 +54,7 @@ async function bootstrap() {
       cookie: {
         maxAge: 24 * 60 * 60 * 1000, // 1 Day
         sameSite: 'strict',
-        httpOnly: true,
+        // httpOnly: true,
       },
       store: new PrismaSessionStore(new PrismaClient(), {
         checkPeriod: 2 * 60 * 1000, // 2 Min
