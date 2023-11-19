@@ -23,6 +23,20 @@ export class BookingHistoryService {
     });
   }
 
+  public async getBookingHistoryById(
+    id: string,
+  ): Promise<BookingHistoryEntity> {
+    const res = await this.prismaService.bookingHistory.findFirst({
+      where: { id },
+      include: {
+        user: { include: { account: true } },
+        driver: { include: { account: true, driverType: true } },
+      },
+    });
+
+    return res;
+  }
+
   public async addNewBooking(
     data: CreateBookingDto,
   ): Promise<BookingHistoryEntity> {

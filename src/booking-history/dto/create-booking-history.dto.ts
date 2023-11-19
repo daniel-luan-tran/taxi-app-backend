@@ -1,4 +1,4 @@
-import { BOOKINGSTATUS } from '@prisma/client';
+import { BOOKINGSTATUS, BOOKINGTYPE } from '@prisma/client';
 import {
   IsBoolean,
   IsEmail,
@@ -28,4 +28,7 @@ export class CreateBookingDto {
 
   @IsOptional()
   status: BOOKINGSTATUS;
+
+  @IsNotEmpty()
+  bookingType: BOOKINGTYPE;
 }

@@ -16,6 +16,11 @@ enum BOOKINGSTATUS {
   USER_CANCEL
 }
 
+enum BOOKINGTYPE {
+  PHONE_CALL
+  MOBILE_APP
+}
+
 model Session {
   id        String   @id
   sid       String   @unique
@@ -96,15 +101,16 @@ model Staff {
 }
 
 model BookingHistory {
-  id       String        @id @default(uuid()) @db.Uuid
-  userId   String        @map("user_id") @db.Uuid
-  user     User          @relation(fields: [userId], references: [accountId])
-  driverId String        @map("driver_id") @db.Uuid
-  driver   Driver        @relation(fields: [driverId], references: [accountId])
-  bookAt   DateTime      @default(now()) @map("book_at")
-  startLat Float         @map("start_lat")
-  startLng Float         @map("start_lng")
-  endLat   Float         @map("end_lat")
-  endLng   Float         @map("end_lng")
-  status   BOOKINGSTATUS @default(SUCCESS)
+  id          String        @id @default(uuid()) @db.Uuid
+  userId      String        @map("user_id") @db.Uuid
+  user        User          @relation(fields: [userId], references: [accountId])
+  driverId    String        @map("driver_id") @db.Uuid
+  driver      Driver        @relation(fields: [driverId], references: [accountId])
+  bookAt      DateTime      @default(now()) @map("book_at")
+  startLat    Float         @map("start_lat")
+  startLng    Float         @map("start_lng")
+  endLat      Float         @map("end_lat")
+  endLng      Float         @map("end_lng")
+  status      BOOKINGSTATUS @default(SUCCESS)
+  bookingType BOOKINGTYPE   @map("booking_type")
 }

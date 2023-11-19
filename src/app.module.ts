@@ -9,6 +9,9 @@ import { SocketModule } from './socket/socket.module';
 import { SocketIoAdapter } from './socket/socketio.adapter';
 import { SocketGateway } from './socket/socket.service';
 import { BookingHistoryModule } from './booking-history/booking-history.module';
+import { DriverTypeModule } from './driver-type/driver-type.module';
+import { DriverModule } from './driver/driver.module';
+import { PassengerModule } from './passenger/passenger.module';
 
 @Module({
   imports: [
@@ -22,6 +25,9 @@ import { BookingHistoryModule } from './booking-history/booking-history.module';
     LoggerModule,
     SocketModule,
     BookingHistoryModule,
+    DriverTypeModule,
+    DriverModule,
+    PassengerModule,
     // SocketGateway,
     // SocketIoAdapter,
   ],

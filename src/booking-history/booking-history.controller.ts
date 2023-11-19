@@ -32,6 +32,13 @@ export class BookingHistoryController {
     return await this.bookingHistoryService.addNewBooking(data);
   }
 
+  @Get('/:id')
+  public async getBookingHistoryById(
+    @Param('id') id: string,
+  ): Promise<BookingHistoryEntity> {
+    return await this.bookingHistoryService.getBookingHistoryById(id);
+  }
+
   @Put('/:id')
   public async updateBooking(
     @Param('id') id: string,
