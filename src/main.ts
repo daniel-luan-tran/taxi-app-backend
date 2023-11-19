@@ -53,9 +53,9 @@ async function bootstrap() {
       saveUninitialized: false,
       cookie: {
         maxAge: 24 * 60 * 60 * 1000, // 1 Day
-        sameSite: 'strict',
+        sameSite: 'none',
         httpOnly: true,
-        domain: 'onrender.com', // For deploy
+        // domain: 'your_domain', // For deploy
       },
       store: new PrismaSessionStore(new PrismaClient(), {
         checkPeriod: 2 * 60 * 1000, // 2 Min
