@@ -13,7 +13,7 @@ import * as path from 'path';
 
 async function bootstrap() {
   const ssl = process.env.SSL === 'true' ? true : false;
-  const isProduction = process.env.NODE_ENV === 'production';
+  // const isProduction = process.env.NODE_ENV === 'production';
   let app = null;
   let hostname = null;
   if (ssl) {
@@ -56,7 +56,7 @@ async function bootstrap() {
         maxAge: 24 * 60 * 60 * 1000, // 1 Day
         sameSite: 'strict',
         httpOnly: true,
-        domain: isProduction ? '.dalutechtaxiapp.online' : undefined, // For deploy
+        domain: '.dalutechtaxiapp.online', // For deploy
       },
       store: new PrismaSessionStore(new PrismaClient(), {
         checkPeriod: 2 * 60 * 1000, // 2 Min
