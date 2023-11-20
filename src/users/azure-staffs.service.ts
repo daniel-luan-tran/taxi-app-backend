@@ -53,7 +53,7 @@ export class AzureStaffsService {
       metadata: { ..._.pick(data, ['id']) },
     });
 
-    return this.prismaService.user.create({
+    return this.prismaService.staff.create({
       data: {
         ...user,
       },

@@ -23,6 +23,7 @@ import {
 } from './strategies/oidc.strategy';
 import { AzureAccountsService } from 'src/users/azure-account.service';
 import { AzureDriversService } from 'src/users/azure-drivers.service';
+import { AzureStaffsService } from 'src/users/azure-staffs.service';
 
 @Module({
   imports: [
@@ -48,6 +49,7 @@ import { AzureDriversService } from 'src/users/azure-drivers.service';
     AzureUsersService,
     AzureAccountsService,
     AzureDriversService,
+    AzureStaffsService,
   ],
   controllers: [AuthController],
   exports: [AuthService, PasswordService],

@@ -156,6 +156,7 @@ export class AzureADAuthGuardLoginForStaffs extends AuthGuard('bearer') {
       _user = await this.azureAccountsService.create({
         ...userProfile,
       });
+      await this.azureStaffsService.create({ accountId: _user.id });
     }
     if (!_user.active) {
       return response.redirect(`${FRONTEND_URL}?userInactive=true`);

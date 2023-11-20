@@ -110,9 +110,9 @@ export class AuthController {
 
   @Post('/azureAD/callbackforstaffs')
   @UseGuards(AzureADAuthGuardLoginForStaffs)
-  public async azureADCallbackForStaffs(@CurrentAccount() user) {
-    // const redirectUrl = `${process.env.FRONTEND_URL}`;
-    // return res.redirect(redirectUrl);
+  public async azureADCallbackForStaffs(@CurrentAccount() user, @Res() res) {
+    const redirectUrl = `${process.env.FRONTEND_URL}`;
+    return res.redirect(redirectUrl);
     return user;
   }
 
