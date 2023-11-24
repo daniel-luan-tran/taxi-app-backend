@@ -46,4 +46,11 @@ export class BookingHistoryController {
   ): Promise<BookingHistoryEntity> {
     return await this.bookingHistoryService.updateBooking(id, data);
   }
+
+  @Delete('/:id')
+  public async deleteBooking(
+    @Param('id') id: string,
+  ): Promise<BookingHistoryEntity> {
+    return await this.bookingHistoryService.deleteBooking(id);
+  }
 }

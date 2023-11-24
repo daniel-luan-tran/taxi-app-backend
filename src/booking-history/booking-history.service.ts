@@ -70,4 +70,17 @@ export class BookingHistoryService {
       include: { user: true, driver: true },
     });
   }
+
+  public async deleteBooking(id: string): Promise<BookingHistoryEntity> {
+    this.logger.log({
+      context: `${BookingHistoryService.name} ${this.deleteBooking.name}`,
+      event_type: LogEventType.BOOKING_HISTORY,
+      reason: LogEventReason.BOOKING_HISTORY_DELETED,
+      metadata: { ..._.pick(['id']) },
+    });
+
+    return await this.prismaService.bookingHistory.delete({
+      where: { id },
+    });
+  }
 }

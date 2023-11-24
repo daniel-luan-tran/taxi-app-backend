@@ -49,6 +49,11 @@ export class SocketGateway
 
     socket.on('passengerRequest', (data) => {
       this.driverSocket = socket;
+      this.driverSocket.data = data;
+      if (!this.passengerSocket) return;
+      if (data !== this.passengerSocket?.data.driverTypeId) {
+        return;
+      }
       console.log('passengerRequest', data);
       if (this.driverSocket)
         this.driverSocket.on('driverDisconnect', () => {
@@ -65,8 +70,14 @@ export class SocketGateway
 
     socket.on('driverRequest', (data) => {
       this.passengerSocket = socket;
+      this.passengerSocket.data = data;
       if (!this.driverSocket) return;
       console.log('driverRequest', data);
+
+      if (this.driverSocket.data !== data.driverTypeId) {
+        return;
+      }
+
       this.driverSocket.emit('driverRequest', data);
 
       this.passengerRoute = data.passengerRoute;

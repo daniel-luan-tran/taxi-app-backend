@@ -40,6 +40,8 @@ const main = async (): Promise<void> => {
         firstName: 'Driver',
         lastName: 'Test',
         displayName: 'Driver Test',
+        phoneNumber: '0123456789',
+        address: 'Address 1',
         password: {
           create: { password },
         },
@@ -57,6 +59,8 @@ const main = async (): Promise<void> => {
         firstName: 'User',
         lastName: 'Test',
         displayName: 'User Test',
+        phoneNumber: '1357902468',
+        address: 'Address 2',
         password: {
           create: { password },
         },
@@ -72,6 +76,8 @@ const main = async (): Promise<void> => {
         firstName: 'Driver Tan',
         lastName: 'Test',
         displayName: 'Driver Tan Test',
+        phoneNumber: '0246813579',
+        address: 'Address 3',
         password: {
           create: { password },
         },
@@ -89,6 +95,8 @@ const main = async (): Promise<void> => {
         firstName: 'Driver Minh',
         lastName: 'Test',
         displayName: 'Driver Minh Test',
+        phoneNumber: '9876543210',
+        address: 'Address 4',
         password: {
           create: { password },
         },
@@ -106,6 +114,8 @@ const main = async (): Promise<void> => {
         firstName: 'Driver Luan',
         lastName: 'Test',
         displayName: 'Driver Luan Test',
+        phoneNumber: '9753186420',
+        address: 'Address 5',
         password: {
           create: { password },
         },
@@ -123,6 +133,8 @@ const main = async (): Promise<void> => {
         firstName: 'Passenger Ha',
         lastName: 'Test',
         displayName: 'Passenger Ha Test',
+        phoneNumber: '8642097531',
+        address: 'Address 6',
         password: {
           create: { password },
         },
@@ -138,6 +150,8 @@ const main = async (): Promise<void> => {
         firstName: 'Passenger Linh',
         lastName: 'Test',
         displayName: 'Passenger Linh Test',
+        phoneNumber: '001122334455',
+        address: 'Address 7',
         password: {
           create: { password },
         },
@@ -153,6 +167,8 @@ const main = async (): Promise<void> => {
         firstName: 'Passenger Lan',
         lastName: 'Test',
         displayName: 'Passenger Lan Test',
+        phoneNumber: '0022446688',
+        address: 'Address 8',
         password: {
           create: { password },
         },
@@ -168,6 +184,8 @@ const main = async (): Promise<void> => {
         firstName: 'Staff',
         lastName: 'Test',
         displayName: 'Staff Test',
+        phoneNumber: '1133557799',
+        address: 'Address 9',
         password: {
           create: { password },
         },
