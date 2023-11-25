@@ -96,7 +96,7 @@ export class SocketGateway
     });
 
     socket.on('acceptPassenger', (data) => {
-      if (!this.passengerSocket) return;
+      // if (!this.passengerSocket) return;
       console.log('driverLocation', data);
       this.passengerSocket.emit('acceptPassenger', data);
 
