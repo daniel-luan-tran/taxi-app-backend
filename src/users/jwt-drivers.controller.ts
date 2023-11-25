@@ -19,9 +19,10 @@ import { DriverRoleGuard } from './guards/driver-role.guards';
 import { UpdateAccountDto } from './dto/update-account.dto';
 import { CreateAccountDto } from './dto/create-account.dto';
 import { CurrentDriver } from './drivers.decorator';
+import { JwtGuard } from 'src/auth/guards/jwt-auth.guard';
 
 @Controller('jwtDrivers')
-// @UseGuards(SessionAuthGuard)
+@UseGuards(JwtGuard)
 export class JwtDriversController {
   constructor(
     private readonly driversService: AzureDriversService,

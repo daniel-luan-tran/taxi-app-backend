@@ -19,6 +19,7 @@ export class UsersService {
   public async findById(id: string): Promise<AccountEntity> {
     return this.prismaService.account.findFirst({
       where: { id },
+      include: { Driver: { include: { driverType: true } }, User: true },
     });
   }
 

@@ -5,10 +5,14 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { JwtService } from '@nestjs/jwt';
+import { UsersService } from 'src/users/users.service';
 
 @Injectable()
 export class JwtGuard extends AuthGuard('jwt') {
-  constructor(private readonly jwtService: JwtService) {
+  constructor(
+    private readonly jwtService: JwtService,
+    private readonly userService: UsersService,
+  ) {
     super();
   }
 
@@ -26,8 +30,9 @@ export class JwtGuard extends AuthGuard('jwt') {
       throw new UnauthorizedException('Invalid token');
     }
 
+    const account = this.userService.findById(user.id);
     // Attach the user to the request for later use in controllers
-    request.user = user;
+    request.user = account;
 
     return true;
   }
