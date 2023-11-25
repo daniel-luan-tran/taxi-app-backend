@@ -14,8 +14,8 @@ import { PassengerService } from './passenger.service';
 import { SessionAuthGuard } from 'src/auth/guards/session-auth.guard';
 import { UserEntity } from 'src/users/entities/user.entity';
 
-@UseGuards(SessionAuthGuard)
 @Controller('passenger')
+// @UseGuards(SessionAuthGuard)
 export class PassengerController {
   constructor(private readonly passengerService: PassengerService) {}
 

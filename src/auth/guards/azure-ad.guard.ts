@@ -67,7 +67,7 @@ export class AzureADAuthGuardLogin extends AuthGuard('bearer') {
     const response = context.switchToHttp().getResponse();
 
     const token = request.body.id_token;
-    const decodedToken = jwt.decode(token, {
+    const decodedToken: any = jwt.decode(token, {
       complete: true,
     });
     request.code = request.body.code;
@@ -129,7 +129,7 @@ export class AzureADAuthGuardLoginForStaffs extends AuthGuard('bearer') {
     const request = context.switchToHttp().getRequest();
     const response = context.switchToHttp().getResponse();
     const token = request.body.id_token;
-    const decodedToken = jwt.decode(token, {
+    const decodedToken: any = jwt.decode(token, {
       complete: true,
     });
     request.code = request.body.code;
@@ -192,7 +192,7 @@ export class AzureADAuthGuardLoginForDrivers extends AuthGuard('bearer') {
     const request = context.switchToHttp().getRequest();
     const response = context.switchToHttp().getResponse();
     const token = request.body.id_token;
-    const decodedToken = jwt.decode(token, {
+    const decodedToken: any = jwt.decode(token, {
       complete: true,
     });
     request.code = request.body.code;

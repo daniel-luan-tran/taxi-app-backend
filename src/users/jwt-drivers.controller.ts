@@ -20,9 +20,9 @@ import { UpdateAccountDto } from './dto/update-account.dto';
 import { CreateAccountDto } from './dto/create-account.dto';
 import { CurrentDriver } from './drivers.decorator';
 
-@Controller('azureDrivers')
+@Controller('jwtDrivers')
 // @UseGuards(SessionAuthGuard)
-export class AzureDriversController {
+export class JwtDriversController {
   constructor(
     private readonly driversService: AzureDriversService,
     private readonly accountsService: AzureAccountsService,
@@ -34,9 +34,8 @@ export class AzureDriversController {
   }
 
   @Get('/check-role')
-  @UseGuards(DriverRoleGuard)
   public async checkRole(@Req() req: any) {
-    const driver = req.driver;
+    const driver = this.driversService.findById(req.user.id);
     return driver;
   }
 

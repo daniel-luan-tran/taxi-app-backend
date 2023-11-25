@@ -15,7 +15,7 @@ import { DriverEntity } from 'src/users/entities/driver.entity';
 import { SessionAuthGuard } from 'src/auth/guards/session-auth.guard';
 
 @Controller('driver')
-@UseGuards(SessionAuthGuard)
+// @UseGuards(SessionAuthGuard)
 export class DriverController {
   constructor(private readonly driverService: DriverService) {}
 

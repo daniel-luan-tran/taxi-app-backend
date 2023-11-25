@@ -13,6 +13,7 @@ import { CustomLogger } from '../logger/logger.service';
 import { AccountEntity } from 'src/users/entities/account.entity';
 import { UsersService } from '../users/users.service';
 import { PasswordService } from './password.service';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
@@ -20,8 +21,20 @@ export class AuthService {
     private readonly usersService: UsersService,
     private readonly passwordService: PasswordService,
     private readonly logger: CustomLogger,
+    private readonly jwtService: JwtService,
     @Inject(REQUEST) private request: Request,
   ) {}
+
+  public async loginJwt(email: string, password: string) {
+    const user = await this.validateUser(email, password);
+    const payload = user;
+    const jwt = await this.jwtService.signAsync(payload, {
+      privateKey: process.env.SECRET_KEY_JWT,
+      expiresIn: '1d',
+    });
+    console.log('login jwt', jwt);
+    return { user, jwt };
+  }
 
   public async validateUser(
     email: string,

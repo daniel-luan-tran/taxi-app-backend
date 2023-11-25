@@ -19,7 +19,7 @@ export class DriverTypeController {
   constructor(private readonly driverTypeService: DriverTypeService) {}
 
   @Get('/')
-  @UseGuards(SessionAuthGuard)
+  // @UseGuards(SessionAuthGuard)
   public async findAll(): Promise<DriverTypeEntity[]> {
     const driverTypes = await this.driverTypeService.findAll();
     return driverTypes;

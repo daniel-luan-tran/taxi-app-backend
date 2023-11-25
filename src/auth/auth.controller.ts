@@ -6,7 +6,9 @@ import {
   HttpStatus,
   Param,
   Post,
+  Headers,
   Res,
+  Req,
   UseGuards,
   Body,
 } from '@nestjs/common';
@@ -30,6 +32,7 @@ import { CurrentDriver } from 'src/users/drivers.decorator';
 import { AccountEntity } from 'src/users/entities/account.entity';
 import { AzureAccountsService } from 'src/users/azure-account.service';
 import { UsersService } from 'src/users/users.service';
+import { JwtGuard } from './guards/jwt-auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -44,6 +47,22 @@ export class AuthController {
   @UseGuards(LocalAuthGuard, ThrottlerGuard)
   @HttpCode(HttpStatus.OK)
   public login(@CurrentAccount() user: UserEntity): UserEntity {
+    return user;
+  }
+
+  @Post('/login-jwt')
+  public async loginJwt(@Body() data: { email: string; password: string }) {
+    const { user, jwt } = await this.authService.loginJwt(
+      data.email,
+      data.password,
+    );
+    return { user, jwt };
+  }
+
+  @Get('/check-jwt')
+  @UseGuards(JwtGuard)
+  public async checkJwt(@Req() req): Promise<AccountEntity> {
+    const user = req.user;
     return user;
   }
 

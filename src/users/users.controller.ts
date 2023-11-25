@@ -14,7 +14,7 @@ import { AccountEntity } from './entities/account.entity';
 import { UsersService } from './users.service';
 
 @Controller('users')
-@UseGuards(SessionAuthGuard)
+// @UseGuards(SessionAuthGuard)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 

@@ -24,6 +24,7 @@ import {
 import { AzureAccountsService } from 'src/users/azure-account.service';
 import { AzureDriversService } from 'src/users/azure-drivers.service';
 import { AzureStaffsService } from 'src/users/azure-staffs.service';
+import { JwtService } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -50,6 +51,7 @@ import { AzureStaffsService } from 'src/users/azure-staffs.service';
     AzureAccountsService,
     AzureDriversService,
     AzureStaffsService,
+    JwtService,
   ],
   controllers: [AuthController],
   exports: [AuthService, PasswordService],

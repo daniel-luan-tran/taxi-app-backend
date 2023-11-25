@@ -10,6 +10,9 @@ import { AzureDriversService } from './azure-drivers.service';
 import { AzureAccountsService } from './azure-account.service';
 import { AzureStaffsService } from './azure-staffs.service';
 import { AzureDriversController } from './azure-drivers.controller';
+import { JwtService } from '@nestjs/jwt';
+import { JwtUsersController } from './jwt-users.controller';
+import { JwtDriversController } from './jwt-drivers.controller';
 
 @Module({
   imports: [LoggerModule],
@@ -21,8 +24,15 @@ import { AzureDriversController } from './azure-drivers.controller';
     AzureDriversService,
     AzureAccountsService,
     AzureStaffsService,
+    JwtService,
   ],
-  controllers: [UsersController, AzureUsersController, AzureDriversController],
+  controllers: [
+    UsersController,
+    AzureUsersController,
+    AzureDriversController,
+    JwtUsersController,
+    JwtDriversController,
+  ],
   exports: [UsersService, AzureUsersService],
 })
 export class UsersModule {}

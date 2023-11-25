@@ -5,22 +5,20 @@ import {
   Param,
   Post,
   Put,
+  Req,
   UseGuards,
 } from '@nestjs/common';
-import { SessionAuthGuard } from '../auth/guards/session-auth.guard';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
 import { UserEntity } from './entities/user.entity';
 import { AzureUsersService } from './azure-users.service';
-import { CurrentUser } from './users.decorator';
-import { UserRoleGuard } from './guards/user-role.guards';
 import { UpdateAccountDto } from './dto/update-account.dto';
 import { AzureAccountsService } from './azure-account.service';
 import { AccountEntity } from './entities/account.entity';
+import { JwtGuard } from 'src/auth/guards/jwt-auth.guard';
 
-@Controller('azureUsers')
-// @UseGuards(SessionAuthGuard)
-export class AzureUsersController {
+@Controller('jwtUsers')
+@UseGuards(JwtGuard)
+export class JwtUsersController {
   constructor(
     private readonly usersService: AzureUsersService,
     private readonly azureAccountService: AzureAccountsService,
@@ -32,8 +30,8 @@ export class AzureUsersController {
   }
 
   @Get('/check-role')
-  @UseGuards(UserRoleGuard)
-  public async checkRole(@CurrentUser() user: UserEntity) {
+  public async checkRole(@Req() req) {
+    const user = this.usersService.findById(req.user.id);
     return user;
   }
 

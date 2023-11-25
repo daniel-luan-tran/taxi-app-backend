@@ -5,6 +5,7 @@ import { AuthService } from 'src/auth/auth.service';
 import { UsersService } from 'src/users/users.service';
 import { PasswordService } from 'src/auth/password.service';
 import { CustomLogger } from 'src/logger/logger.service';
+import { JwtService } from '@nestjs/jwt';
 
 @Module({
   providers: [
@@ -13,6 +14,7 @@ import { CustomLogger } from 'src/logger/logger.service';
     UsersService,
     PasswordService,
     CustomLogger,
+    JwtService,
   ],
   controllers: [DriverController],
 })
